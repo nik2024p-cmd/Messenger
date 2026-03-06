@@ -537,6 +537,134 @@
             font-weight: 500;
         }
         
+        /* Вкладки профиля */
+        .profile-tabs {
+            display: flex;
+            gap: 8px;
+            margin: 20px 0 16px;
+            background: var(--bg-card);
+            padding: 4px;
+            border-radius: 16px;
+        }
+        
+        .profile-tab {
+            flex: 1;
+            background: transparent;
+            border: none;
+            border-radius: 12px;
+            padding: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-align: center;
+        }
+        
+        .profile-tab.active {
+            background: var(--bg-secondary);
+            color: var(--tg-blue);
+            box-shadow: 0 4px 10px var(--shadow);
+        }
+        
+        .profile-tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .profile-tab-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Сообщения в профиле */
+        .message-form {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .message-input {
+            width: 100%;
+            padding: 16px;
+            border: 2px solid var(--border-color);
+            border-radius: 18px;
+            font-size: 15px;
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            margin-bottom: 12px;
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        .message-input:focus {
+            outline: none;
+            border-color: var(--tg-blue);
+        }
+        
+        .message-btn {
+            background: var(--tg-blue);
+            color: white;
+            border: none;
+            border-radius: 18px;
+            padding: 14px;
+            font-size: 15px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .message-btn:active {
+            transform: scale(0.98);
+        }
+        
+        .messages-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .message-card {
+            background: var(--bg-card);
+            border-radius: 20px;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+        }
+        
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        
+        .message-sender {
+            font-weight: 600;
+            color: var(--tg-blue);
+            cursor: pointer;
+        }
+        
+        .message-text {
+            font-size: 15px;
+            line-height: 1.5;
+            color: var(--text-primary);
+        }
+        
         .nft-gift {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 24px;
@@ -1726,26 +1854,6 @@
             color: var(--text-secondary);
             margin-top: 4px;
         }
-        
-        /* Кнопка сброса данных (только для Дурова) */
-        .reset-data-btn {
-            background: var(--danger);
-            color: white;
-            border: none;
-            border-radius: 18px;
-            padding: 16px;
-            font-size: 16px;
-            font-weight: 600;
-            width: 100%;
-            cursor: pointer;
-            transition: all 0.2s;
-            margin-top: 20px;
-        }
-        
-        .reset-data-btn:active {
-            transform: scale(0.98);
-            opacity: 0.9;
-        }
     </style>
 </head>
 <body>
@@ -1822,7 +1930,7 @@
                 
                 <div class="menu-items">
                     <div class="menu-item" onclick="closeMenu(); showScreen('profile');">
-                        <span class="menu-item-icon">??</span>
+                        <span class="menu-item-icon">👤</span>
                         <span class="menu-item-text">Мой профиль</span>
                     </div>
                     <div class="menu-item" onclick="closeMenu(); showScreen('channels');">
@@ -1998,21 +2106,51 @@
                 </div>
                 
                 <div class="screen" id="profileScreen" style="display: none;">
+                    <!-- Шапка профиля -->
                     <div class="profile-section" id="profileSection"></div>
                     
-                    <div class="nft-gift" id="profileNft" style="display: none; margin-top: 20px;">
-                        <div class="nft-header">
-                            <span class="nft-title">🏆 Твой NFT Подарок</span>
-                            <span class="nft-badge">Владелец</span>
-                        </div>
-                        <div class="nft-image">
-                            <img src="https://i.postimg.cc/PqbCnsDX/type-list.webp" alt="NFT Gift">
-                        </div>
-                        <div class="nft-footer">
-                            <div class="nft-price">
-                                <span class="nft-price-value">Limited</span>
-                                <span class="nft-price-label">Edition</span>
+                    <!-- Вкладки профиля -->
+                    <div class="profile-tabs" id="profileTabs">
+                        <button class="profile-tab active" onclick="switchProfileTab('main')">📋 Главная</button>
+                        <button class="profile-tab" onclick="switchProfileTab('gifts')">🎁 Подарки</button>
+                    </div>
+                    
+                    <!-- Контент вкладки "Главная" -->
+                    <div class="profile-tab-content active" id="profileMainTab">
+                        <!-- Форма отправки сообщения (только если это не свой профиль) -->
+                        <div id="messageFormContainer" style="display: none;">
+                            <div class="message-form">
+                                <h3 style="margin-bottom:12px;">💬 Написать сообщение</h3>
+                                <textarea class="message-input" id="messageInput" placeholder="Напиши сообщение..."></textarea>
+                                <button class="message-btn" onclick="sendMessage()">Отправить</button>
                             </div>
+                        </div>
+                        
+                        <!-- Сообщения -->
+                        <h3 style="margin-bottom:12px;">📨 Сообщения</h3>
+                        <div class="messages-list" id="messagesList"></div>
+                    </div>
+                    
+                    <!-- Контент вкладки "Подарки" -->
+                    <div class="profile-tab-content" id="profileGiftsTab">
+                        <div class="nft-gift" id="profileNft" style="display: none;">
+                            <div class="nft-header">
+                                <span class="nft-title">🏆 Эксклюзивный NFT</span>
+                                <span class="nft-badge">Владелец</span>
+                            </div>
+                            <div class="nft-image">
+                                <img src="https://i.postimg.cc/PqbCnsDX/type-list.webp" alt="NFT Gift">
+                            </div>
+                            <div class="nft-footer">
+                                <div class="nft-price">
+                                    <span class="nft-price-value">Limited</span>
+                                    <span class="nft-price-label">Edition</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="empty-state" id="noNftMessage" style="display: none;">
+                            🎁 У этого пользователя пока нет NFT подарков
                         </div>
                     </div>
                     
@@ -2047,28 +2185,6 @@
                                 <div class="settings-description">Изменить описание профиля</div>
                             </div>
                             <button class="edit-profile-btn" style="width:auto; padding:8px 16px; margin-top:0;" onclick="showEditProfile()">✏️</button>
-                        </div>
-                        
-                        <!-- Панель администратора для Дурова (видна ТОЛЬКО если username === 'durov') -->
-                        <div id="adminPanel" style="display: none; margin-top:20px; padding-top:20px; border-top:2px solid var(--border-color);">
-                            <h3 style="margin-bottom:16px;">👑 Панель администратора (Дуров)</h3>
-                            <div class="settings-item">
-                                <div>
-                                    <div class="settings-label">Выдать замки 🔒</div>
-                                    <div class="settings-description">Пополнить баланс (себе или другим)</div>
-                                </div>
-                                <button class="action-btn small" onclick="showGiveLocksModal()">Выдать</button>
-                            </div>
-                            <div class="settings-item">
-                                <div>
-                                    <div class="settings-label">Управление видео</div>
-                                    <div class="settings-description">Удалять, комментировать, модерировать</div>
-                                </div>
-                                <button class="action-btn small danger" onclick="showAdminVideoPanel()">Управлять</button>
-                            </div>
-                            
-                            <!-- Кнопка сброса данных для экстренных случаев -->
-                            <button class="reset-data-btn" onclick="resetAllData()">🔄 Сбросить все данные</button>
                         </div>
                     </div>
                 </div>
@@ -2222,17 +2338,18 @@
 
     <script>
         // Ключи для localStorage
-        const USERS_KEY = 'social_users_stable';
-        const POSTS_KEY = 'social_posts_stable';
-        const CHANNELS_KEY = 'social_channels_stable';
-        const CHANNEL_POSTS_KEY = 'social_channel_posts_stable';
-        const SUBSCRIPTIONS_KEY = 'social_subscriptions_stable';
-        const CURRENT_USER_KEY = 'social_current_user_stable';
-        const THEME_KEY = 'social_theme_stable';
-        const EMOJIS_KEY = 'social_emojis_stable';
-        const VIDEOS_KEY = 'social_videos_stable';
-        const COMMENTS_KEY = 'social_comments_stable';
-        const NFT_KEY = 'social_nft_stable';
+        const USERS_KEY = 'social_users_final_v2';
+        const POSTS_KEY = 'social_posts_final_v2';
+        const CHANNELS_KEY = 'social_channels_final_v2';
+        const CHANNEL_POSTS_KEY = 'social_channel_posts_final_v2';
+        const SUBSCRIPTIONS_KEY = 'social_subscriptions_final_v2';
+        const CURRENT_USER_KEY = 'social_current_user_final_v2';
+        const THEME_KEY = 'social_theme_final_v2';
+        const EMOJIS_KEY = 'social_emojis_final_v2';
+        const VIDEOS_KEY = 'social_videos_final_v2';
+        const COMMENTS_KEY = 'social_comments_final_v2';
+        const NFT_KEY = 'social_nft_final_v2';
+        const MESSAGES_KEY = 'social_messages_final_v2';
         
         // Данные
         let users = [];
@@ -2244,6 +2361,7 @@
         let videos = [];
         let comments = [];
         let nftOwners = [];
+        let messages = [];
         let currentUser = null;
         let viewingProfile = null;
         let currentChannel = null;
@@ -2256,20 +2374,6 @@
         // Применение темы
         document.documentElement.setAttribute('data-theme', currentTheme);
         
-        // Функция сброса всех данных (только для Дурова)
-        window.resetAllData = function() {
-            if (currentUser?.username !== 'durov') {
-                alert('Только Дуров может сбрасывать данные!');
-                return;
-            }
-            
-            if (confirm('Точно сбросить все данные? Это удалит всех пользователей и посты!')) {
-                localStorage.clear();
-                alert('Данные сброшены. Страница будет перезагружена.');
-                location.reload();
-            }
-        };
-        
         // Загрузка данных
         function loadData() {
             try {
@@ -2277,7 +2381,6 @@
                 if (savedUsers) {
                     users = JSON.parse(savedUsers);
                 } else {
-                    // СОЗДАЕМ ДУРОВА ПРАВИЛЬНО - с маленькой буквы
                     users = [
                         { 
                             username: 'durov', 
@@ -2316,10 +2419,12 @@
                 const savedNFT = localStorage.getItem(NFT_KEY);
                 nftOwners = savedNFT ? JSON.parse(savedNFT) : [];
                 
+                const savedMessages = localStorage.getItem(MESSAGES_KEY);
+                messages = savedMessages ? JSON.parse(savedMessages) : [];
+                
                 const savedCurrentUser = localStorage.getItem(CURRENT_USER_KEY);
                 currentUser = savedCurrentUser ? JSON.parse(savedCurrentUser) : null;
                 
-                // Добавляем баланс если его нет
                 users.forEach(u => {
                     if (u.balance === undefined) u.balance = 0;
                 });
@@ -2339,6 +2444,7 @@
         function saveVideos() { localStorage.setItem(VIDEOS_KEY, JSON.stringify(videos)); }
         function saveComments() { localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments)); }
         function saveNFT() { localStorage.setItem(NFT_KEY, JSON.stringify(nftOwners)); }
+        function saveMessages() { localStorage.setItem(MESSAGES_KEY, JSON.stringify(messages)); }
         
         function saveCurrentUser(user) {
             currentUser = user;
@@ -2407,16 +2513,7 @@
                 showScreen('feed');
                 updateCommentsBadge();
                 
-                // ВАЖНО: Панель администратора показываем ТОЛЬКО если username === 'durov' (маленькими буквами)
-                const adminPanel = document.getElementById('adminPanel');
-                if (adminPanel) {
-                    if (currentUser.username === 'durov') {
-                        adminPanel.style.display = 'block';
-                        console.log('Дуров зашел - панель администратора активна');
-                    } else {
-                        adminPanel.style.display = 'none';
-                    }
-                }
+                console.log('Текущий пользователь:', currentUser.username);
                 
                 renderGiftsScreen();
             } else {
@@ -2515,8 +2612,90 @@
                 case 'profile':
                     viewingProfile = currentUser;
                     renderProfile();
+                    switchProfileTab('main');
                     break;
             }
+        }
+        
+        // Переключение вкладок в профиле
+        window.switchProfileTab = function(tabName) {
+            // Обновляем классы вкладок
+            document.querySelectorAll('.profile-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Обновляем классы контента
+            document.querySelectorAll('.profile-tab-content').forEach(content => {
+                content.classList.remove('active');
+            });
+            document.getElementById(`profile${tabName.charAt(0).toUpperCase() + tabName.slice(1)}Tab`).classList.add('active');
+        };
+        
+        // Отправка сообщения пользователю
+        window.sendMessage = function() {
+            const input = document.getElementById('messageInput');
+            const content = input.value.trim();
+            
+            if (!content) {
+                alert('Напиши сообщение');
+                return;
+            }
+            
+            if (!viewingProfile) {
+                alert('Ошибка: профиль не найден');
+                return;
+            }
+            
+            const newMessage = {
+                id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                fromUser: currentUser.username,
+                toUser: viewingProfile.username,
+                content: content,
+                timestamp: Date.now(),
+                read: false
+            };
+            
+            messages.push(newMessage);
+            saveMessages();
+            
+            input.value = '';
+            renderMessages();
+            alert('Сообщение отправлено!');
+        };
+        
+        // Рендер сообщений в профиле
+        function renderMessages() {
+            if (!viewingProfile) return;
+            
+            const messagesList = document.getElementById('messagesList');
+            const userMessages = messages
+                .filter(m => m.toUser === viewingProfile.username || 
+                            (m.fromUser === viewingProfile.username && m.toUser === currentUser.username))
+                .sort((a, b) => b.timestamp - a.timestamp);
+            
+            if (userMessages.length === 0) {
+                messagesList.innerHTML = '<div class="empty-state">💬 Нет сообщений</div>';
+                return;
+            }
+            
+            messagesList.innerHTML = userMessages.map(msg => {
+                const isFromMe = msg.fromUser === currentUser.username;
+                const sender = users.find(u => u.username === msg.fromUser);
+                
+                return `
+                    <div class="message-card" style="${isFromMe ? 'opacity:0.8;' : ''}">
+                        <div class="message-header">
+                            <span class="message-sender" onclick="viewProfile('${msg.fromUser}')">
+                                ${isFromMe ? 'Вы' : `@${msg.fromUser}`}
+                                ${sender?.verified ? '<span class="verified-badge" style="width:14px;height:14px;"></span>' : ''}
+                            </span>
+                            <span>${formatTime(msg.timestamp)}</span>
+                        </div>
+                        <div class="message-text">${replaceEmojis(escapeHtml(msg.content))}</div>
+                    </div>
+                `;
+            }).join('');
         }
         
         function renderGiftsScreen() {
@@ -2560,9 +2739,8 @@
                 updateUserBalance();
                 renderGiftsScreen();
                 
-                const profileNft = document.getElementById('profileNft');
-                if (profileNft) {
-                    profileNft.style.display = 'block';
+                if (viewingProfile && viewingProfile.username === currentUser.username) {
+                    renderProfile();
                 }
                 
                 alert('NFT куплен! Теперь он отображается в твоем профиле');
@@ -2578,6 +2756,80 @@
                 .join('');
             
             document.getElementById('giveLocksModal').classList.add('active');
+        }
+        
+        function showAdminVideoPanel() {
+            closeMenu();
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('adminVideoScreen').classList.add('active');
+            renderAdminVideoPanel();
+        }
+        
+        function renderAdminVideoPanel() {
+            const messages = document.getElementById('adminVideoMessages');
+            const sortedVideos = [...videos].sort((a, b) => b.timestamp - a.timestamp);
+            
+            if (sortedVideos.length === 0) {
+                messages.innerHTML = '<div class="empty-state">🎬 Нет видео для модерации</div>';
+                return;
+            }
+            
+            messages.innerHTML = sortedVideos.map(video => {
+                const user = users.find(u => u.username === video.username);
+                return `
+                    <div class="card" style="margin-bottom:12px;">
+                        <div class="user-info-row">
+                            <div class="user-name-small">
+                                @${video.username} ${user?.verified ? '<span class="verified-badge"></span>' : ''}
+                                <span class="admin-badge">ADMIN</span>
+                            </div>
+                            <span class="post-time">${formatTime(video.timestamp)}</span>
+                        </div>
+                        <div class="video-container" onclick="openTikTokPlayer('${video.id}', 'video')">
+                            <video src="${video.url}" muted loop style="max-height:200px;"></video>
+                        </div>
+                        <div style="margin:12px 0;">${escapeHtml(video.description || '')}</div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="action-btn small danger" style="flex:1;" onclick="adminDeleteVideo('${video.id}')">🗑 Удалить</button>
+                            <button class="action-btn small" style="flex:1;" onclick="adminCommentOnVideo('${video.id}')">💬 Комментировать</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function adminDeleteVideo(videoId) {
+            if (confirm('Удалить это видео?')) {
+                videos = videos.filter(v => v.id !== videoId);
+                posts = posts.filter(p => p.id !== videoId);
+                saveVideos();
+                savePosts();
+                renderAdminVideoPanel();
+                if (document.getElementById('videosScreen').style.display === 'block') renderVideosGrid();
+                if (document.getElementById('feedScreen').style.display === 'block') renderFeed();
+            }
+        }
+        
+        function adminCommentOnVideo(videoId) {
+            const comment = prompt('Введите комментарий (будет виден автору видео):');
+            if (comment) {
+                const video = videos.find(v => v.id === videoId);
+                if (video) {
+                    const newComment = {
+                        id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                        videoId: videoId,
+                        postId: videoId,
+                        username: currentUser.username,
+                        content: comment,
+                        timestamp: Date.now(),
+                        read: false
+                    };
+                    comments.push(newComment);
+                    saveComments();
+                    alert('Комментарий добавлен');
+                    updateCommentsBadge();
+                }
+            }
         }
         
         document.getElementById('giveLocksBtn')?.addEventListener('click', () => {
@@ -2846,16 +3098,28 @@
             
             const profileSection = document.getElementById('profileSection');
             const userPostsList = document.getElementById('userPostsList');
+            const messageFormContainer = document.getElementById('messageFormContainer');
             const profileNft = document.getElementById('profileNft');
+            const noNftMessage = document.getElementById('noNftMessage');
             
             const userAvatar = user.avatar ? 
                 `<img src="${user.avatar}" alt="avatar">` : 
                 user.username[0].toUpperCase();
             
-            if (user.username === currentUser?.username && nftOwners.includes(user.username)) {
+            // Показываем форму отправки сообщения только если это не свой профиль
+            if (user.username !== currentUser?.username) {
+                messageFormContainer.style.display = 'block';
+            } else {
+                messageFormContainer.style.display = 'none';
+            }
+            
+            // Показываем NFT если есть
+            if (nftOwners.includes(user.username)) {
                 profileNft.style.display = 'block';
+                noNftMessage.style.display = 'none';
             } else {
                 profileNft.style.display = 'none';
+                noNftMessage.style.display = 'block';
             }
             
             profileSection.innerHTML = `
@@ -2884,6 +3148,9 @@
                     `<button class="edit-profile-btn" onclick="showEditProfile()">✏️ Редактировать профиль</button>` :
                     ''}
             `;
+            
+            // Рендерим сообщения
+            renderMessages();
             
             if (userPosts.length === 0) {
                 userPostsList.innerHTML = '<div class="empty-state">📝 Нет постов</div>';
@@ -3093,11 +3360,13 @@
         window.showMyProfile = function() {
             viewingProfile = currentUser;
             showScreen('profile');
+            switchProfileTab('main');
         };
         
         window.viewProfile = function(username) {
             viewingProfile = users.find(u => u.username === username);
             showScreen('profile');
+            switchProfileTab('main');
         };
         
         window.showPostComments = function(postId) {
@@ -3388,80 +3657,6 @@
         document.getElementById('cancelChannelVerifyBtn').addEventListener('click', () => {
             document.getElementById('verifyChannelModal').classList.remove('active');
         });
-        
-        window.showAdminVideoPanel = function() {
-            closeMenu();
-            document.getElementById('mainScreen').style.display = 'none';
-            document.getElementById('adminVideoScreen').classList.add('active');
-            renderAdminVideoPanel();
-        };
-        
-        function renderAdminVideoPanel() {
-            const messages = document.getElementById('adminVideoMessages');
-            const sortedVideos = [...videos].sort((a, b) => b.timestamp - a.timestamp);
-            
-            if (sortedVideos.length === 0) {
-                messages.innerHTML = '<div class="empty-state">🎬 Нет видео для модерации</div>';
-                return;
-            }
-            
-            messages.innerHTML = sortedVideos.map(video => {
-                const user = users.find(u => u.username === video.username);
-                return `
-                    <div class="card" style="margin-bottom:12px;">
-                        <div class="user-info-row">
-                            <div class="user-name-small">
-                                @${video.username} ${user?.verified ? '<span class="verified-badge"></span>' : ''}
-                                <span class="admin-badge">ADMIN</span>
-                            </div>
-                            <span class="post-time">${formatTime(video.timestamp)}</span>
-                        </div>
-                        <div class="video-container" onclick="openTikTokPlayer('${video.id}', 'video')">
-                            <video src="${video.url}" muted loop style="max-height:200px;"></video>
-                        </div>
-                        <div style="margin:12px 0;">${escapeHtml(video.description || '')}</div>
-                        <div style="display:flex; gap:8px;">
-                            <button class="action-btn small danger" style="flex:1;" onclick="adminDeleteVideo('${video.id}')">🗑 Удалить</button>
-                            <button class="action-btn small" style="flex:1;" onclick="adminCommentOnVideo('${video.id}')">💬 Комментировать</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-        
-        window.adminDeleteVideo = function(videoId) {
-            if (confirm('Удалить это видео?')) {
-                videos = videos.filter(v => v.id !== videoId);
-                posts = posts.filter(p => p.id !== videoId);
-                saveVideos();
-                savePosts();
-                renderAdminVideoPanel();
-                if (document.getElementById('videosScreen').style.display === 'block') renderVideosGrid();
-                if (document.getElementById('feedScreen').style.display === 'block') renderFeed();
-            }
-        };
-        
-        window.adminCommentOnVideo = function(videoId) {
-            const comment = prompt('Введите комментарий (будет виден автору видео):');
-            if (comment) {
-                const video = videos.find(v => v.id === videoId);
-                if (video) {
-                    const newComment = {
-                        id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
-                        videoId: videoId,
-                        postId: videoId,
-                        username: currentUser.username,
-                        content: comment,
-                        timestamp: Date.now(),
-                        read: false
-                    };
-                    comments.push(newComment);
-                    saveComments();
-                    alert('Комментарий добавлен');
-                    updateCommentsBadge();
-                }
-            }
-        };
         
         function handleVideoUpload(file, callback) {
             if (!file) return;
@@ -3794,6 +3989,7 @@
             saveVideos();
             saveComments();
             saveNFT();
+            saveMessages();
         });
         
         setInterval(() => {
@@ -3806,8 +4002,44 @@
             saveVideos();
             saveComments();
             saveNFT();
+            saveMessages();
             updateCommentsBadge();
         }, 30000);
+    </script>
+
+    <!-- ===== ПРИНУДИТЕЛЬНОЕ ДОБАВЛЕНИЕ ПАНЕЛИ АДМИНА ===== -->
+    <script>
+    setTimeout(function() {
+        if (currentUser && currentUser.username === 'durov') {
+            const settingsScreen = document.getElementById('settingsScreen');
+            if (settingsScreen) {
+                if (!document.getElementById('adminPanel')) {
+                    const adminDiv = document.createElement('div');
+                    adminDiv.id = 'adminPanel';
+                    adminDiv.style.display = 'block';
+                    adminDiv.style.marginTop = '20px';
+                    adminDiv.style.padding = '20px';
+                    adminDiv.style.borderTop = '3px solid red';
+                    adminDiv.style.backgroundColor = '#ff000020';
+                    adminDiv.innerHTML = `
+                        <h3 style="margin-bottom:16px;">👑 Панель администратора (Дуров)</h3>
+                        <div style="margin-bottom:10px;">
+                            <button class="action-btn small" onclick="showGiveLocksModal()" style="width:100%;">🔒 Выдать замки</button>
+                        </div>
+                        <div>
+                            <button class="action-btn small danger" onclick="showAdminVideoPanel()" style="width:100%;">🎬 Управлять видео</button>
+                        </div>
+                    `;
+                    
+                    const settingsSection = settingsScreen.querySelector('.settings-section');
+                    if (settingsSection) {
+                        settingsSection.appendChild(adminDiv);
+                        console.log('Панель администратора принудительно добавлена!');
+                    }
+                }
+            }
+        }
+    }, 1000);
     </script>
 </body>
 </html>
