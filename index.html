@@ -2187,6 +2187,9 @@
                             <button class="edit-profile-btn" style="width:auto; padding:8px 16px; margin-top:0;" onclick="showEditProfile()">✏️</button>
                         </div>
                     </div>
+                    
+                    <!-- Панель администратора будет вставлена сюда для Дурова -->
+                    <div id="adminPanelContainer"></div>
                 </div>
             </div>
             
@@ -2380,7 +2383,13 @@
                 const savedUsers = localStorage.getItem(USERS_KEY);
                 if (savedUsers) {
                     users = JSON.parse(savedUsers);
+                    
+                    // Убедимся, что у всех пользователей баланс - число
+                    users.forEach(u => {
+                        if (typeof u.balance !== 'number') u.balance = 0;
+                    });
                 } else {
+                    // Начальные данные: только Дуров с балансом 0 (как у всех)
                     users = [
                         { 
                             username: 'durov', 
@@ -2388,7 +2397,7 @@
                             bio: 'Создатель Telegram',
                             verified: true,
                             avatar: null,
-                            balance: 10000,
+                            balance: 0,               // ← баланс 0
                             registered: Date.now() 
                         }
                     ];
@@ -2425,11 +2434,7 @@
                 const savedCurrentUser = localStorage.getItem(CURRENT_USER_KEY);
                 currentUser = savedCurrentUser ? JSON.parse(savedCurrentUser) : null;
                 
-                users.forEach(u => {
-                    if (u.balance === undefined) u.balance = 0;
-                });
-                
-                console.log('Данные загружены');
+                console.log('Данные загружены, балансы сброшены');
             } catch (e) {
                 console.error('Ошибка загрузки:', e);
             }
@@ -2491,13 +2496,13 @@
         function updateCommentsBadge() {
             const unreadComments = comments.filter(c => !c.read && c.username !== currentUser?.username).length;
             document.getElementById('commentsBadge').textContent = unreadComments;
-            document.getElementById('navCommentsBadge').textContent = unreadComments;
+            // document.getElementById('navCommentsBadge').textContent = unreadComments; // если есть такой элемент
             if (unreadComments === 0) {
                 document.getElementById('commentsBadge').style.display = 'none';
-                document.getElementById('navCommentsBadge').style.display = 'none';
+                // document.getElementById('navCommentsBadge').style.display = 'none';
             } else {
                 document.getElementById('commentsBadge').style.display = 'inline-block';
-                document.getElementById('navCommentsBadge').style.display = 'inline-block';
+                // document.getElementById('navCommentsBadge').style.display = 'inline-block';
             }
         }
         
@@ -2516,9 +2521,45 @@
                 console.log('Текущий пользователь:', currentUser.username);
                 
                 renderGiftsScreen();
+                renderAdminPanelForDurov(); // ← проверяем и добавляем админку
             } else {
                 authScreen.style.display = 'flex';
                 mainScreen.style.display = 'none';
+            }
+        }
+        
+        // Функция добавления админ-панели для Дурова (гарантированно)
+        function renderAdminPanelForDurov() {
+            const container = document.getElementById('adminPanelContainer');
+            if (!container) return;
+            
+            // Если пользователь - Дуров, добавляем панель
+            if (currentUser && currentUser.username === 'durov') {
+                // Проверим, есть ли уже панель, чтобы не дублировать
+                if (document.getElementById('durovAdminPanel')) return;
+                
+                const adminDiv = document.createElement('div');
+                adminDiv.id = 'durovAdminPanel';
+                adminDiv.style.marginTop = '20px';
+                adminDiv.style.padding = '20px';
+                adminDiv.style.borderTop = '3px solid red';
+                adminDiv.style.backgroundColor = '#ff000020';
+                adminDiv.style.borderRadius = '24px';
+                adminDiv.innerHTML = `
+                    <h3 style="margin-bottom:16px;">👑 Панель администратора (Дуров)</h3>
+                    <div style="margin-bottom:10px;">
+                        <button class="action-btn small" onclick="showGiveLocksModal()" style="width:100%;">🔒 Выдать замки</button>
+                    </div>
+                    <div>
+                        <button class="action-btn small danger" onclick="showAdminVideoPanel()" style="width:100%;">🎬 Управлять видео</button>
+                    </div>
+                `;
+                container.appendChild(adminDiv);
+                console.log('✅ Панель администратора добавлена');
+            } else {
+                // Если не Дуров, удаляем панель, если была
+                const oldPanel = document.getElementById('durovAdminPanel');
+                if (oldPanel) oldPanel.remove();
             }
         }
         
@@ -2613,6 +2654,9 @@
                     viewingProfile = currentUser;
                     renderProfile();
                     switchProfileTab('main');
+                    break;
+                case 'settings':
+                    renderAdminPanelForDurov(); // при открытии настроек обновляем панель
                     break;
             }
         }
@@ -3153,7 +3197,7 @@
             renderMessages();
             
             if (userPosts.length === 0) {
-                userPostsList.innerHTML = '<div class="empty-state">📝 Нет постов</div>';
+                userPostsList.innerHTML = '<div class="empty-state">?? Нет постов</div>';
             } else {
                 userPostsList.innerHTML = userPosts.map(post => `
                     <div class="card">
@@ -3894,7 +3938,7 @@
                 bio: bio,
                 verified: false,
                 avatar: null,
-                balance: 0,
+                balance: 0,                       // ← всегда 0
                 registered: Date.now()
             };
             
@@ -4004,42 +4048,8 @@
             saveNFT();
             saveMessages();
             updateCommentsBadge();
+            renderAdminPanelForDurov(); // при каждом интервале проверяем и добавляем админку
         }, 30000);
-    </script>
-
-    <!-- ===== ПРИНУДИТЕЛЬНОЕ ДОБАВЛЕНИЕ ПАНЕЛИ АДМИНА ===== -->
-    <script>
-    setTimeout(function() {
-        if (currentUser && currentUser.username === 'durov') {
-            const settingsScreen = document.getElementById('settingsScreen');
-            if (settingsScreen) {
-                if (!document.getElementById('adminPanel')) {
-                    const adminDiv = document.createElement('div');
-                    adminDiv.id = 'adminPanel';
-                    adminDiv.style.display = 'block';
-                    adminDiv.style.marginTop = '20px';
-                    adminDiv.style.padding = '20px';
-                    adminDiv.style.borderTop = '3px solid red';
-                    adminDiv.style.backgroundColor = '#ff000020';
-                    adminDiv.innerHTML = `
-                        <h3 style="margin-bottom:16px;">👑 Панель администратора (Дуров)</h3>
-                        <div style="margin-bottom:10px;">
-                            <button class="action-btn small" onclick="showGiveLocksModal()" style="width:100%;">🔒 Выдать замки</button>
-                        </div>
-                        <div>
-                            <button class="action-btn small danger" onclick="showAdminVideoPanel()" style="width:100%;">🎬 Управлять видео</button>
-                        </div>
-                    `;
-                    
-                    const settingsSection = settingsScreen.querySelector('.settings-section');
-                    if (settingsSection) {
-                        settingsSection.appendChild(adminDiv);
-                        console.log('Панель администратора принудительно добавлена!');
-                    }
-                }
-            }
-        }
-    }, 1000);
     </script>
 </body>
 </html>
