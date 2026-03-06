@@ -27,6 +27,8 @@
             --tg-dark-blue: #1e6eb5;
             --menu-bg: #ffffff;
             --shadow: rgba(0, 0, 0, 0.1);
+            --verified-badge-color: #3390ec;
+            --gold: #FFD700;
         }
         
         [data-theme="dark"] {
@@ -45,6 +47,8 @@
             --tg-dark-blue: #1e6eb5;
             --menu-bg: #1f1f1f;
             --shadow: rgba(0, 0, 0, 0.3);
+            --verified-badge-color: #3390ec;
+            --gold: #FFD700;
         }
         
         body {
@@ -82,7 +86,6 @@
             }
         }
         
-        /* Экран авторизации */
         .auth-screen {
             flex: 1;
             display: flex;
@@ -209,7 +212,6 @@
             background: var(--tg-dark-blue);
         }
         
-        /* Основной интерфейс */
         .main-screen {
             flex: 1;
             display: none;
@@ -218,7 +220,6 @@
             position: relative;
         }
         
-        /* Новый верхний бар */
         .header {
             display: flex;
             justify-content: space-between;
@@ -264,7 +265,19 @@
         .header-right {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 12px;
+        }
+        
+        .currency-badge {
+            background: linear-gradient(135deg, var(--gold), #FDB931);
+            padding: 6px 12px;
+            border-radius: 30px;
+            font-size: 14px;
+            font-weight: 600;
+            color: #000;
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         
         .header-avatar {
@@ -289,7 +302,6 @@
             object-fit: cover;
         }
         
-        /* Новое меню (как в Telegram) */
         .menu {
             position: fixed;
             top: 0;
@@ -385,8 +397,11 @@
         .verified-badge {
             width: 18px;
             height: 18px;
-            background: url('https://i.postimg.cc/26SSLc98/20260304-220508.png') no-repeat center;
-            background-size: contain;
+            background-color: var(--verified-badge-color);
+            mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>') no-repeat center;
+            mask-size: contain;
+            -webkit-mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="black"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>') no-repeat center;
+            -webkit-mask-size: contain;
             display: inline-block;
             vertical-align: middle;
         }
@@ -458,7 +473,6 @@
             background: var(--bg-card);
         }
         
-        /* Контент */
         .content-area {
             flex: 1;
             overflow-y: auto;
@@ -467,7 +481,6 @@
             scroll-behavior: smooth;
         }
         
-        /* Новая нижняя навигация */
         .bottom-nav {
             position: absolute;
             bottom: 0;
@@ -524,7 +537,391 @@
             font-weight: 500;
         }
         
-        /* Экран чата/канала */
+        .nft-gift {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 24px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nft-gift::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 20s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .nft-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .nft-title {
+            font-size: 18px;
+            font-weight: 700;
+        }
+        
+        .nft-badge {
+            background: rgba(255,255,255,0.2);
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 12px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .nft-image {
+            width: 100%;
+            border-radius: 16px;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .nft-image img {
+            width: 100%;
+            border-radius: 16px;
+            display: block;
+        }
+        
+        .nft-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .nft-price {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .nft-price-value {
+            font-size: 20px;
+            font-weight: 700;
+        }
+        
+        .nft-price-label {
+            font-size: 12px;
+            opacity: 0.8;
+        }
+        
+        .nft-button {
+            background: white;
+            color: #764ba2;
+            border: none;
+            border-radius: 30px;
+            padding: 10px 20px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .nft-button:active {
+            transform: scale(0.95);
+        }
+        
+        .nft-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .balance-card {
+            background: var(--bg-card);
+            border-radius: 24px;
+            padding: 16px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .balance-info {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .balance-icon {
+            font-size: 32px;
+        }
+        
+        .balance-details {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .balance-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .balance-value {
+            font-size: 24px;
+            font-weight: 700;
+            color: var(--gold);
+        }
+        
+        .tiktok-player {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #000;
+            z-index: 3000;
+            display: none;
+            flex-direction: column;
+        }
+        
+        .tiktok-player.active {
+            display: flex;
+        }
+        
+        .tiktok-header {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            padding: 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 3001;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.5), transparent);
+        }
+        
+        .tiktok-close {
+            color: white;
+            font-size: 28px;
+            cursor: pointer;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0,0,0,0.3);
+            border-radius: 50%;
+        }
+        
+        .tiktok-info {
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .tiktok-author {
+            font-weight: 600;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .tiktok-videos-container {
+            flex: 1;
+            overflow-y: auto;
+            scroll-snap-type: y mandatory;
+            height: 100%;
+            background: #000;
+        }
+        
+        .tiktok-video-wrapper {
+            height: 100%;
+            scroll-snap-align: start;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+        }
+        
+        .tiktok-video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            max-height: 100vh;
+        }
+        
+        .tiktok-actions {
+            position: absolute;
+            right: 16px;
+            bottom: 100px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            z-index: 3001;
+        }
+        
+        .tiktok-action {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: white;
+            cursor: pointer;
+        }
+        
+        .tiktok-action-icon {
+            font-size: 28px;
+            background: rgba(0,0,0,0.3);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .tiktok-action-count {
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .tiktok-comments {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-secondary);
+            border-top-left-radius: 24px;
+            border-top-right-radius: 24px;
+            max-height: 70%;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+            z-index: 3002;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .tiktok-comments.open {
+            transform: translateY(0);
+        }
+        
+        .comments-header {
+            padding: 16px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .comments-title {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .comments-close {
+            font-size: 24px;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .comments-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            max-height: 400px;
+        }
+        
+        .comment-item {
+            display: flex;
+            gap: 12px;
+        }
+        
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, var(--tg-blue), #5856D6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            flex-shrink: 0;
+            overflow: hidden;
+        }
+        
+        .comment-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .comment-content {
+            flex: 1;
+        }
+        
+        .comment-author {
+            font-weight: 600;
+            margin-bottom: 4px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .comment-text {
+            font-size: 14px;
+            margin-bottom: 4px;
+        }
+        
+        .comment-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+        }
+        
+        .comment-input-area {
+            display: flex;
+            gap: 8px;
+            padding: 16px;
+            border-top: 1px solid var(--border-color);
+            background: var(--bg-secondary);
+        }
+        
+        .comment-input {
+            flex: 1;
+            background: var(--bg-card);
+            border: none;
+            border-radius: 24px;
+            padding: 12px 18px;
+            font-size: 14px;
+            color: var(--text-primary);
+            outline: none;
+        }
+        
+        .comment-send {
+            background: var(--tg-blue);
+            color: white;
+            border: none;
+            border-radius: 24px;
+            padding: 12px 24px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        
         .chat-screen {
             display: none;
             flex-direction: column;
@@ -612,32 +1009,51 @@
         }
         
         .message {
-            max-width: 80%;
+            max-width: 100%;
             padding: 12px 16px;
             border-radius: 20px;
             position: relative;
             word-wrap: break-word;
             font-size: 15px;
-        }
-        
-        .message.incoming {
             background: var(--bg-card);
             align-self: flex-start;
-            border-bottom-left-radius: 4px;
         }
         
         .message.outgoing {
             background: var(--tg-blue);
             color: white;
             align-self: flex-end;
-            border-bottom-right-radius: 4px;
         }
         
         .message-time {
             font-size: 10px;
             opacity: 0.7;
-            margin-top: 4px;
+            margin-top: 8px;
             text-align: right;
+        }
+        
+        .video-message {
+            max-width: 100%;
+            border-radius: 16px;
+            margin-bottom: 8px;
+            cursor: pointer;
+        }
+        
+        .video-message video {
+            width: 100%;
+            max-height: 300px;
+            border-radius: 16px;
+            background: #000;
+        }
+        
+        .admin-badge {
+            background: var(--danger);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 30px;
+            font-size: 10px;
+            font-weight: 600;
+            margin-left: 8px;
         }
         
         .chat-input-area {
@@ -671,7 +1087,6 @@
             font-size: 14px;
         }
         
-        /* Секция кастомных эмодзи */
         .emoji-section {
             background: var(--bg-card);
             border-radius: 24px;
@@ -747,7 +1162,6 @@
             cursor: pointer;
         }
         
-        /* Посты */
         .new-post-form {
             margin-bottom: 20px;
             background: var(--bg-card);
@@ -798,6 +1212,10 @@
             background: var(--success);
         }
         
+        .action-btn.danger {
+            background: var(--danger);
+        }
+        
         .list {
             display: flex;
             flex-direction: column;
@@ -809,6 +1227,7 @@
             border-radius: 24px;
             padding: 16px;
             border: 1px solid var(--border-color);
+            position: relative;
         }
         
         .card-header {
@@ -868,6 +1287,22 @@
             white-space: pre-wrap;
         }
         
+        .video-container {
+            margin: 12px 0;
+            border-radius: 16px;
+            overflow: hidden;
+            background: #000;
+            max-height: 400px;
+            cursor: pointer;
+        }
+        
+        .video-container video {
+            width: 100%;
+            max-height: 400px;
+            object-fit: contain;
+            pointer-events: none;
+        }
+        
         .post-stats {
             display: flex;
             gap: 16px;
@@ -892,7 +1327,6 @@
             background: var(--border-color);
         }
         
-        /* Каналы */
         .channels-grid {
             display: flex;
             flex-direction: column;
@@ -961,7 +1395,6 @@
             gap: 12px;
         }
         
-        /* Профиль */
         .profile-section {
             background: var(--bg-card);
             border-radius: 24px;
@@ -1057,7 +1490,6 @@
             cursor: pointer;
         }
         
-        /* Настройки */
         .settings-section {
             background: var(--bg-card);
             border-radius: 24px;
@@ -1110,7 +1542,6 @@
             color: white;
         }
         
-        /* Модальные окна */
         .modal {
             display: none;
             position: fixed;
@@ -1188,6 +1619,9 @@
             padding: 8px;
             border-radius: 12px;
             transition: background 0.2s;
+            position: absolute;
+            top: 10px;
+            right: 10px;
         }
         
         .delete-btn:active {
@@ -1207,11 +1641,115 @@
             margin-top: 5px;
             text-align: center;
         }
+        
+        .username-hint {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        .attachment-preview {
+            background: var(--bg-secondary);
+            border-radius: 16px;
+            padding: 12px;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .attachment-preview video {
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            object-fit: cover;
+        }
+        
+        .attachment-info {
+            flex: 1;
+        }
+        
+        .attachment-name {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+        
+        .attachment-size {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        
+        .remove-attachment {
+            color: var(--danger);
+            font-size: 20px;
+            cursor: pointer;
+            padding: 8px;
+        }
+        
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .video-card {
+            background: var(--bg-card);
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            cursor: pointer;
+        }
+        
+        .video-card video {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background: #000;
+            pointer-events: none;
+        }
+        
+        .video-card-info {
+            padding: 10px;
+        }
+        
+        .video-card-author {
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        
+        .video-card-time {
+            font-size: 11px;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        
+        /* Кнопка сброса данных (только для Дурова) */
+        .reset-data-btn {
+            background: var(--danger);
+            color: white;
+            border: none;
+            border-radius: 18px;
+            padding: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-top: 20px;
+        }
+        
+        .reset-data-btn:active {
+            transform: scale(0.98);
+            opacity: 0.9;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Экран авторизации -->
         <div class="auth-screen" id="authScreen">
             <div class="auth-header">
                 <h1>Social Hub</h1>
@@ -1223,11 +1761,10 @@
                 <button class="auth-tab" id="registerTab">Регистрация</button>
             </div>
             
-            <!-- Форма входа -->
             <div class="auth-form active" id="loginForm">
                 <div class="input-group">
                     <label>Юзернейм</label>
-                    <input type="text" id="loginUsername" placeholder="например: john" autocomplete="off">
+                    <input type="text" id="loginUsername" placeholder="например: durov" autocomplete="off">
                 </div>
                 <div class="input-group">
                     <label>Пароль</label>
@@ -1237,11 +1774,11 @@
                 <div id="loginError" class="error-message"></div>
             </div>
             
-            <!-- Форма регистрации -->
             <div class="auth-form" id="registerForm">
                 <div class="input-group">
-                    <label>Юзернейм</label>
-                    <input type="text" id="registerUsername" placeholder="например: john" autocomplete="off">
+                    <label>Юзернейм (только латиница, цифры и _)</label>
+                    <input type="text" id="registerUsername" placeholder="например: durov" autocomplete="off">
+                    <div class="username-hint">Разрешены: a-z, 0-9, _</div>
                 </div>
                 <div class="input-group">
                     <label>Пароль (минимум 4 символа)</label>
@@ -1257,20 +1794,21 @@
             </div>
         </div>
         
-        <!-- Основной экран -->
         <div class="main-screen" id="mainScreen">
-            <!-- Новый верхний бар -->
             <div class="header">
                 <div class="header-left">
                     <button class="menu-btn" id="menuBtn">☰</button>
                     <span class="header-title" id="headerTitle">Лента</span>
                 </div>
                 <div class="header-right">
+                    <div class="currency-badge" id="currencyBadge">
+                        <span>🔒</span>
+                        <span id="userBalance">0</span>
+                    </div>
                     <div class="header-avatar" id="headerAvatar" onclick="showMyProfile()"></div>
                 </div>
             </div>
             
-            <!-- Новое меню -->
             <div class="menu" id="sideMenu">
                 <div class="menu-header">
                     <div class="menu-user">
@@ -1284,7 +1822,7 @@
                 
                 <div class="menu-items">
                     <div class="menu-item" onclick="closeMenu(); showScreen('profile');">
-                        <span class="menu-item-icon">👤</span>
+                        <span class="menu-item-icon">??</span>
                         <span class="menu-item-text">Мой профиль</span>
                     </div>
                     <div class="menu-item" onclick="closeMenu(); showScreen('channels');">
@@ -1298,6 +1836,19 @@
                     <div class="menu-item" onclick="closeMenu(); showScreen('emoji');">
                         <span class="menu-item-icon">😊</span>
                         <span class="menu-item-text">Мои эмодзи</span>
+                    </div>
+                    <div class="menu-item" onclick="closeMenu(); showScreen('videos');">
+                        <span class="menu-item-icon">🎬</span>
+                        <span class="menu-item-text">Видео</span>
+                    </div>
+                    <div class="menu-item" onclick="closeMenu(); showScreen('comments');">
+                        <span class="menu-item-icon">💬</span>
+                        <span class="menu-item-text">Комментарии</span>
+                        <span class="menu-item-badge" id="commentsBadge">0</span>
+                    </div>
+                    <div class="menu-item" onclick="closeMenu(); showScreen('gifts');">
+                        <span class="menu-item-icon">🎁</span>
+                        <span class="menu-item-text">Подарки</span>
                     </div>
                     <div class="menu-item" onclick="closeMenu(); showScreen('settings');">
                         <span class="menu-item-icon">⚙️</span>
@@ -1315,29 +1866,41 @@
             
             <div class="menu-overlay" id="menuOverlay" onclick="closeMenu()"></div>
             
-            <!-- Контент -->
             <div class="content-area" id="contentArea">
-                <!-- Лента -->
                 <div class="screen" id="feedScreen">
                     <div class="new-post-form">
                         <textarea class="post-input" id="postInput" placeholder="Что у тебя нового? Используй :название: для эмодзи"></textarea>
+                        
+                        <div id="videoPreviewContainer" style="display: none;" class="attachment-preview">
+                            <video id="videoPreview" controls></video>
+                            <div class="attachment-info">
+                                <div class="attachment-name" id="videoPreviewName"></div>
+                                <div class="attachment-size" id="videoPreviewSize"></div>
+                            </div>
+                            <span class="remove-attachment" onclick="clearVideoAttachment()">✕</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                            <button class="action-btn small" style="flex: 1;" onclick="document.getElementById('videoUpload').click()">🎬 Добавить видео в пост</button>
+                            <input type="file" id="videoUpload" accept="video/mp4,video/quicktime,video/*" style="display: none;">
+                        </div>
+                        
                         <div class="emoji-grid" id="postEmojiPicker" style="grid-template-columns: repeat(6, 1fr); margin-bottom: 12px;"></div>
-                        <button class="action-btn" id="addPostBtn">➕ Опубликовать</button>
+                        <button class="action-btn" id="addPostBtn">➕ Опубликовать пост</button>
                     </div>
                     <div class="list" id="postsList"></div>
                 </div>
                 
-                <!-- Каналы -->
                 <div class="screen" id="channelsScreen" style="display: none;">
                     <div class="new-post-form">
-                        <div class="avatar-upload">
-                            <div class="avatar-preview" id="channelAvatarPreview">
+                        <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                            <div class="avatar-preview" id="channelAvatarPreview" style="width: 60px; height: 60px; border-radius: 16px; background: var(--bg-secondary); display: flex; align-items: center; justify-content: center; font-size: 30px; border: 2px solid var(--border-color);">
                                 <span>📢</span>
                             </div>
-                            <input type="file" class="avatar-input" id="channelAvatarInput" accept="image/*">
-                            <label for="channelAvatarInput" class="avatar-label">Загрузить аватар</label>
+                            <input type="file" class="avatar-input" id="channelAvatarInput" accept="image/*" style="display: none;">
+                            <label for="channelAvatarInput" class="action-btn small" style="margin:0; width:auto;">Загрузить аватар</label>
                         </div>
-                        <input type="text" id="channelNameInput" placeholder="Название канала">
+                        <input type="text" id="channelNameInput" placeholder="Название канала" style="width:100%; padding:14px; border-radius:16px; border:2px solid var(--border-color); background:var(--bg-secondary); color:var(--text-primary); margin-bottom:12px;">
                         <textarea class="post-input" id="channelDescInput" placeholder="Описание канала" rows="2"></textarea>
                         <button class="action-btn" id="createChannelBtn">📢 Создать канал</button>
                         <div id="channelError" class="error-message"></div>
@@ -1346,12 +1909,10 @@
                     <div class="channels-grid" id="channelsGrid"></div>
                 </div>
                 
-                <!-- Люди -->
                 <div class="screen" id="usersScreen" style="display: none;">
                     <div class="users-grid" id="usersGrid"></div>
                 </div>
                 
-                <!-- Эмодзи -->
                 <div class="screen" id="emojiScreen" style="display: none;">
                     <div class="emoji-section">
                         <div class="emoji-title">
@@ -1372,19 +1933,92 @@
                     <div class="emoji-section">
                         <div class="emoji-title">📝 Как использовать</div>
                         <p style="color: var(--text-secondary); font-size: 14px; line-height: 1.6;">
-                            Напиши :название: в посте или сообщении, и эмодзи автоматически заменится на картинку.<br>
-                            Например: :привет: → <span class="verified-badge" style="width: 20px; height: 20px;"></span>
+                            Напиши :название: в посте или сообщении, и эмодзи автоматически заменится на картинку.
                         </p>
                     </div>
                 </div>
                 
-                <!-- Профиль -->
+                <div class="screen" id="videosScreen" style="display: none;">
+                    <div class="new-post-form">
+                        <h3 style="margin-bottom:12px;">📹 Загрузить отдельное видео</h3>
+                        <textarea class="post-input" id="videoDescInput" placeholder="Описание видео..." rows="2"></textarea>
+                        
+                        <div id="videoOnlyPreview" style="display: none;" class="attachment-preview">
+                            <video id="videoOnlyPreviewVideo" controls></video>
+                            <div class="attachment-info">
+                                <div class="attachment-name" id="videoOnlyPreviewName"></div>
+                                <div class="attachment-size" id="videoOnlyPreviewSize"></div>
+                            </div>
+                            <span class="remove-attachment" onclick="clearVideoOnlyAttachment()">✕</span>
+                        </div>
+                        
+                        <div style="display: flex; gap: 8px; margin-bottom: 12px;">
+                            <button class="action-btn small" style="flex: 1;" onclick="document.getElementById('videoOnlyUpload').click()">🎬 Выбрать видео (до 20 сек)</button>
+                            <input type="file" id="videoOnlyUpload" accept="video/mp4,video/quicktime,video/*" style="display: none;">
+                        </div>
+                        
+                        <button class="action-btn" id="uploadVideoBtn">📤 Опубликовать видео</button>
+                        <div id="videoError" class="error-message"></div>
+                    </div>
+                    
+                    <div class="video-grid" id="videosGrid"></div>
+                </div>
+                
+                <div class="screen" id="commentsScreen" style="display: none;">
+                    <div class="list" id="commentsList"></div>
+                </div>
+                
+                <div class="screen" id="giftsScreen" style="display: none;">
+                    <div class="balance-card">
+                        <div class="balance-info">
+                            <span class="balance-icon">🔒</span>
+                            <div class="balance-details">
+                                <span class="balance-label">Твой баланс</span>
+                                <span class="balance-value" id="giftsBalance">0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="nft-gift" id="nftGiftSection">
+                        <div class="nft-header">
+                            <span class="nft-title">✨ Эксклюзивный NFT Подарок</span>
+                            <span class="nft-badge">Limited Edition</span>
+                        </div>
+                        <div class="nft-image">
+                            <img src="https://i.postimg.cc/PqbCnsDX/type-list.webp" alt="NFT Gift">
+                        </div>
+                        <div class="nft-footer">
+                            <div class="nft-price">
+                                <span class="nft-price-value" id="nftPrice">1000</span>
+                                <span class="nft-price-label">🔒 замков</span>
+                            </div>
+                            <button class="nft-button" id="buyNftBtn" onclick="buyNFT()">Купить NFT</button>
+                        </div>
+                    </div>
+                </div>
+                
                 <div class="screen" id="profileScreen" style="display: none;">
                     <div class="profile-section" id="profileSection"></div>
+                    
+                    <div class="nft-gift" id="profileNft" style="display: none; margin-top: 20px;">
+                        <div class="nft-header">
+                            <span class="nft-title">🏆 Твой NFT Подарок</span>
+                            <span class="nft-badge">Владелец</span>
+                        </div>
+                        <div class="nft-image">
+                            <img src="https://i.postimg.cc/PqbCnsDX/type-list.webp" alt="NFT Gift">
+                        </div>
+                        <div class="nft-footer">
+                            <div class="nft-price">
+                                <span class="nft-price-value">Limited</span>
+                                <span class="nft-price-label">Edition</span>
+                            </div>
+                        </div>
+                    </div>
+                    
                     <div class="list" id="userPostsList"></div>
                 </div>
                 
-                <!-- Настройки -->
                 <div class="screen" id="settingsScreen" style="display: none;">
                     <div class="settings-section">
                         <div class="settings-item">
@@ -1404,7 +2038,7 @@
                                 <div class="settings-description">Загрузи свою фотографию</div>
                             </div>
                             <input type="file" class="avatar-input" id="profileAvatarInput" accept="image/*" style="display: none;">
-                            <label for="profileAvatarInput" class="avatar-label" style="padding:8px 16px; width: auto;">Загрузить</label>
+                            <label for="profileAvatarInput" class="avatar-label" style="padding:8px 16px; background:var(--tg-blue); color:white; border-radius:16px; cursor:pointer;">Загрузить</label>
                         </div>
                         
                         <div class="settings-item">
@@ -1414,27 +2048,48 @@
                             </div>
                             <button class="edit-profile-btn" style="width:auto; padding:8px 16px; margin-top:0;" onclick="showEditProfile()">✏️</button>
                         </div>
+                        
+                        <!-- Панель администратора для Дурова (видна ТОЛЬКО если username === 'durov') -->
+                        <div id="adminPanel" style="display: none; margin-top:20px; padding-top:20px; border-top:2px solid var(--border-color);">
+                            <h3 style="margin-bottom:16px;">👑 Панель администратора (Дуров)</h3>
+                            <div class="settings-item">
+                                <div>
+                                    <div class="settings-label">Выдать замки 🔒</div>
+                                    <div class="settings-description">Пополнить баланс (себе или другим)</div>
+                                </div>
+                                <button class="action-btn small" onclick="showGiveLocksModal()">Выдать</button>
+                            </div>
+                            <div class="settings-item">
+                                <div>
+                                    <div class="settings-label">Управление видео</div>
+                                    <div class="settings-description">Удалять, комментировать, модерировать</div>
+                                </div>
+                                <button class="action-btn small danger" onclick="showAdminVideoPanel()">Управлять</button>
+                            </div>
+                            
+                            <!-- Кнопка сброса данных для экстренных случаев -->
+                            <button class="reset-data-btn" onclick="resetAllData()">🔄 Сбросить все данные</button>
+                        </div>
                     </div>
                 </div>
             </div>
             
-            <!-- Новая нижняя навигация -->
             <div class="bottom-nav">
                 <div class="nav-item active" data-screen="feed">
                     <span class="nav-icon">📱</span>
                     <span class="nav-label">Лента</span>
                 </div>
+                <div class="nav-item" data-screen="videos">
+                    <span class="nav-icon">🎬</span>
+                    <span class="nav-label">Видео</span>
+                </div>
+                <div class="nav-item" data-screen="gifts">
+                    <span class="nav-icon">🎁</span>
+                    <span class="nav-label">Подарки</span>
+                </div>
                 <div class="nav-item" data-screen="channels">
                     <span class="nav-icon">📢</span>
                     <span class="nav-label">Каналы</span>
-                </div>
-                <div class="nav-item" data-screen="users">
-                    <span class="nav-icon">👥</span>
-                    <span class="nav-label">Люди</span>
-                </div>
-                <div class="nav-item" data-screen="emoji">
-                    <span class="nav-icon">😊</span>
-                    <span class="nav-label">Эмодзи</span>
                 </div>
                 <div class="nav-item" data-screen="profile">
                     <span class="nav-icon">👤</span>
@@ -1443,7 +2098,27 @@
             </div>
         </div>
         
-        <!-- Экран канала (чат) -->
+        <div class="tiktok-player" id="tiktokPlayer">
+            <div class="tiktok-header">
+                <span class="tiktok-close" onclick="closeTikTokPlayer()">✕</span>
+                <div class="tiktok-info" id="tiktokInfo"></div>
+            </div>
+            
+            <div class="tiktok-videos-container" id="tiktokVideosContainer"></div>
+            
+            <div class="tiktok-comments" id="tiktokComments">
+                <div class="comments-header">
+                    <span class="comments-title">Комментарии</span>
+                    <span class="comments-close" onclick="closeTikTokComments()">✕</span>
+                </div>
+                <div class="comments-list" id="tiktokCommentsList"></div>
+                <div class="comment-input-area">
+                    <input type="text" class="comment-input" id="tiktokCommentInput" placeholder="Добавить комментарий...">
+                    <button class="comment-send" onclick="sendTikTokComment()">Отправить</button>
+                </div>
+            </div>
+        </div>
+        
         <div class="chat-screen" id="channelChatScreen">
             <div class="chat-header">
                 <button class="chat-back-btn" id="backFromChannelChatBtn">←</button>
@@ -1463,9 +2138,23 @@
                 <button class="chat-send-btn" id="channelChatSendBtn">Опубликовать</button>
             </div>
         </div>
+        
+        <div class="chat-screen" id="adminVideoScreen">
+            <div class="chat-header">
+                <button class="chat-back-btn" id="backFromAdminVideoBtn">←</button>
+                <div class="chat-avatar" style="background:var(--danger);">👑</div>
+                <div class="chat-info">
+                    <div class="chat-name">Модерация видео</div>
+                    <div class="chat-status">Управление контентом</div>
+                </div>
+            </div>
+            
+            <div class="chat-messages" id="adminVideoMessages"></div>
+            
+            <div class="chat-input-area" style="display: none;"></div>
+        </div>
     </div>
 
-    <!-- Модальное окно редактирования профиля -->
     <div class="modal" id="editProfileModal">
         <div class="modal-content">
             <div class="modal-title">Редактировать профиль</div>
@@ -1480,7 +2169,6 @@
         </div>
     </div>
 
-    <!-- Модальное окно выдачи галочки пользователю -->
     <div class="modal" id="verifyUserModal">
         <div class="modal-content">
             <div class="modal-title">Выдать галочку пользователю</div>
@@ -1492,7 +2180,24 @@
         </div>
     </div>
 
-    <!-- Модальное окно выдачи галочки каналу -->
+    <div class="modal" id="giveLocksModal">
+        <div class="modal-content">
+            <div class="modal-title">🔒 Выдать замки</div>
+            <div class="input-group">
+                <label>Кому выдать</label>
+                <select id="locksUserSelect"></select>
+            </div>
+            <div class="input-group">
+                <label>Количество замков</label>
+                <input type="number" id="locksAmount" min="1" value="100">
+            </div>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelLocksBtn">Отмена</button>
+                <button class="modal-btn primary" id="giveLocksBtn">Выдать</button>
+            </div>
+        </div>
+    </div>
+
     <div class="modal" id="verifyChannelModal">
         <div class="modal-content">
             <div class="modal-title">Выдать галочку каналу</div>
@@ -1504,16 +2209,30 @@
         </div>
     </div>
 
+    <div class="modal" id="moderateVideoModal">
+        <div class="modal-content">
+            <div class="modal-title">Модерация видео</div>
+            <div id="moderateVideoContent"></div>
+            <div class="modal-buttons">
+                <button class="modal-btn secondary" id="cancelModerateBtn">Закрыть</button>
+                <button class="modal-btn primary danger" id="deleteVideoBtn">Удалить видео</button>
+            </div>
+        </div>
+    </div>
+
     <script>
         // Ключи для localStorage
-        const USERS_KEY = 'social_users_v8';
-        const POSTS_KEY = 'social_posts_v8';
-        const CHANNELS_KEY = 'social_channels_v8';
-        const CHANNEL_POSTS_KEY = 'social_channel_posts_v8';
-        const SUBSCRIPTIONS_KEY = 'social_subscriptions_v8';
-        const CURRENT_USER_KEY = 'social_current_user_v8';
-        const THEME_KEY = 'social_theme_v8';
-        const EMOJIS_KEY = 'social_emojis_v8';
+        const USERS_KEY = 'social_users_stable';
+        const POSTS_KEY = 'social_posts_stable';
+        const CHANNELS_KEY = 'social_channels_stable';
+        const CHANNEL_POSTS_KEY = 'social_channel_posts_stable';
+        const SUBSCRIPTIONS_KEY = 'social_subscriptions_stable';
+        const CURRENT_USER_KEY = 'social_current_user_stable';
+        const THEME_KEY = 'social_theme_stable';
+        const EMOJIS_KEY = 'social_emojis_stable';
+        const VIDEOS_KEY = 'social_videos_stable';
+        const COMMENTS_KEY = 'social_comments_stable';
+        const NFT_KEY = 'social_nft_stable';
         
         // Данные
         let users = [];
@@ -1522,108 +2241,129 @@
         let channelPosts = [];
         let subscriptions = [];
         let customEmojis = [];
+        let videos = [];
+        let comments = [];
+        let nftOwners = [];
         let currentUser = null;
         let viewingProfile = null;
         let currentChannel = null;
         let currentTheme = localStorage.getItem(THEME_KEY) || 'light';
+        let pendingVideo = null;
+        let pendingVideoOnly = null;
+        let currentTikTokIndex = 0;
+        let currentTikTokVideoId = null;
         
         // Применение темы
         document.documentElement.setAttribute('data-theme', currentTheme);
         
+        // Функция сброса всех данных (только для Дурова)
+        window.resetAllData = function() {
+            if (currentUser?.username !== 'durov') {
+                alert('Только Дуров может сбрасывать данные!');
+                return;
+            }
+            
+            if (confirm('Точно сбросить все данные? Это удалит всех пользователей и посты!')) {
+                localStorage.clear();
+                alert('Данные сброшены. Страница будет перезагружена.');
+                location.reload();
+            }
+        };
+        
         // Загрузка данных
         function loadData() {
             try {
-                // Пользователи
                 const savedUsers = localStorage.getItem(USERS_KEY);
                 if (savedUsers) {
                     users = JSON.parse(savedUsers);
                 } else {
+                    // СОЗДАЕМ ДУРОВА ПРАВИЛЬНО - с маленькой буквы
                     users = [
                         { 
                             username: 'durov', 
                             password: 'durov228', 
                             bio: 'Создатель Telegram',
                             verified: true,
-                            admin: true,
                             avatar: null,
+                            balance: 10000,
                             registered: Date.now() 
                         }
                     ];
                     localStorage.setItem(USERS_KEY, JSON.stringify(users));
                 }
                 
-                // Посты
                 const savedPosts = localStorage.getItem(POSTS_KEY);
                 posts = savedPosts ? JSON.parse(savedPosts) : [];
                 
-                // Каналы
                 const savedChannels = localStorage.getItem(CHANNELS_KEY);
                 channels = savedChannels ? JSON.parse(savedChannels) : [];
                 
-                // Посты каналов
                 const savedChannelPosts = localStorage.getItem(CHANNEL_POSTS_KEY);
                 channelPosts = savedChannelPosts ? JSON.parse(savedChannelPosts) : [];
                 
-                // Подписки
                 const savedSubs = localStorage.getItem(SUBSCRIPTIONS_KEY);
                 subscriptions = savedSubs ? JSON.parse(savedSubs) : [];
                 
-                // Кастомные эмодзи
                 const savedEmojis = localStorage.getItem(EMOJIS_KEY);
                 customEmojis = savedEmojis ? JSON.parse(savedEmojis) : [];
                 
-                // Текущий пользователь
+                const savedVideos = localStorage.getItem(VIDEOS_KEY);
+                videos = savedVideos ? JSON.parse(savedVideos) : [];
+                
+                const savedComments = localStorage.getItem(COMMENTS_KEY);
+                comments = savedComments ? JSON.parse(savedComments) : [];
+                
+                const savedNFT = localStorage.getItem(NFT_KEY);
+                nftOwners = savedNFT ? JSON.parse(savedNFT) : [];
+                
                 const savedCurrentUser = localStorage.getItem(CURRENT_USER_KEY);
                 currentUser = savedCurrentUser ? JSON.parse(savedCurrentUser) : null;
                 
-                console.log('Данные загружены:', { 
-                    users: users.length, 
-                    posts: posts.length, 
-                    channels: channels.length, 
-                    emojis: customEmojis.length,
-                    currentUser: currentUser?.username 
+                // Добавляем баланс если его нет
+                users.forEach(u => {
+                    if (u.balance === undefined) u.balance = 0;
                 });
+                
+                console.log('Данные загружены');
             } catch (e) {
                 console.error('Ошибка загрузки:', e);
             }
         }
         
-        // Сохранение данных
-        function saveUsers() {
-            localStorage.setItem(USERS_KEY, JSON.stringify(users));
-        }
-        
-        function savePosts() {
-            localStorage.setItem(POSTS_KEY, JSON.stringify(posts));
-        }
-        
-        function saveChannels() {
-            localStorage.setItem(CHANNELS_KEY, JSON.stringify(channels));
-        }
-        
-        function saveChannelPosts() {
-            localStorage.setItem(CHANNEL_POSTS_KEY, JSON.stringify(channelPosts));
-        }
-        
-        function saveSubscriptions() {
-            localStorage.setItem(SUBSCRIPTIONS_KEY, JSON.stringify(subscriptions));
-        }
-        
-        function saveEmojis() {
-            localStorage.setItem(EMOJIS_KEY, JSON.stringify(customEmojis));
-            renderEmojiPicker();
-            renderCustomEmojis();
-        }
+        function saveUsers() { localStorage.setItem(USERS_KEY, JSON.stringify(users)); }
+        function savePosts() { localStorage.setItem(POSTS_KEY, JSON.stringify(posts)); }
+        function saveChannels() { localStorage.setItem(CHANNELS_KEY, JSON.stringify(channels)); }
+        function saveChannelPosts() { localStorage.setItem(CHANNEL_POSTS_KEY, JSON.stringify(channelPosts)); }
+        function saveSubscriptions() { localStorage.setItem(SUBSCRIPTIONS_KEY, JSON.stringify(subscriptions)); }
+        function saveEmojis() { localStorage.setItem(EMOJIS_KEY, JSON.stringify(customEmojis)); }
+        function saveVideos() { localStorage.setItem(VIDEOS_KEY, JSON.stringify(videos)); }
+        function saveComments() { localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments)); }
+        function saveNFT() { localStorage.setItem(NFT_KEY, JSON.stringify(nftOwners)); }
         
         function saveCurrentUser(user) {
             currentUser = user;
             localStorage.setItem(CURRENT_USER_KEY, JSON.stringify(user));
         }
         
-        // Замена эмодзи в тексте
+        function updateUserBalance() {
+            if (currentUser) {
+                document.getElementById('userBalance').textContent = currentUser.balance || 0;
+                document.getElementById('giftsBalance').textContent = currentUser.balance || 0;
+            }
+        }
+        
+        function escapeHtml(unsafe) {
+            if (!unsafe) return '';
+            return unsafe
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+        }
+        
         function replaceEmojis(text) {
             if (!text) return text;
-            
             let result = text;
             customEmojis.forEach(emoji => {
                 const regex = new RegExp(`:${emoji.name}:`, 'g');
@@ -1632,60 +2372,29 @@
             return result;
         }
         
-        // Рендер пикера эмодзи
-        function renderEmojiPicker() {
-            const picker = document.getElementById('postEmojiPicker');
-            if (!picker) return;
-            
-            if (customEmojis.length === 0) {
-                picker.innerHTML = '';
-                return;
-            }
-            
-            picker.innerHTML = customEmojis.map(emoji => `
-                <div class="emoji-item" onclick="insertEmoji('${emoji.name}')" style="font-size: 16px;">
-                    <img src="${emoji.url}" style="width: 30px; height: 30px; object-fit: contain;">
-                </div>
-            `).join('');
+        function formatTime(timestamp) {
+            const date = new Date(timestamp);
+            const now = new Date();
+            const diff = now - date;
+            if (diff < 60000) return 'только что';
+            if (diff < 3600000) return `${Math.floor(diff / 60000)}м назад`;
+            if (diff < 86400000) return `${Math.floor(diff / 3600000)}ч назад`;
+            return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
         }
         
-        // Вставка эмодзи
-        window.insertEmoji = function(name) {
-            const input = document.getElementById('postInput');
-            input.value += ` :${name}: `;
-            input.focus();
-        };
-        
-        // Рендер списка эмодзи
-        function renderCustomEmojis() {
-            const grid = document.getElementById('customEmojiGrid');
-            const count = document.getElementById('emojiCount');
-            
-            if (!grid) return;
-            
-            if (customEmojis.length === 0) {
-                grid.innerHTML = '<div class="empty-state" style="grid-column: span 4;">У тебя пока нет эмодзи</div>';
-                if (count) count.textContent = '(0)';
-                return;
+        function updateCommentsBadge() {
+            const unreadComments = comments.filter(c => !c.read && c.username !== currentUser?.username).length;
+            document.getElementById('commentsBadge').textContent = unreadComments;
+            document.getElementById('navCommentsBadge').textContent = unreadComments;
+            if (unreadComments === 0) {
+                document.getElementById('commentsBadge').style.display = 'none';
+                document.getElementById('navCommentsBadge').style.display = 'none';
+            } else {
+                document.getElementById('commentsBadge').style.display = 'inline-block';
+                document.getElementById('navCommentsBadge').style.display = 'inline-block';
             }
-            
-            if (count) count.textContent = `(${customEmojis.length})`;
-            
-            grid.innerHTML = customEmojis.map(emoji => `
-                <div class="emoji-item" title=":${emoji.name}:" onclick="copyEmojiName('${emoji.name}')">
-                    <img src="${emoji.url}" style="width: 100%; height: 100%; object-fit: contain;">
-                </div>
-            `).join('');
         }
         
-        // Копирование названия эмодзи
-        window.copyEmojiName = function(name) {
-            navigator.clipboard?.writeText(`:${name}:`).then(() => {
-                alert(`Скопировано: :${name}:`);
-            });
-        };
-        
-        // Проверка авторизации
         function checkAuth() {
             const authScreen = document.getElementById('authScreen');
             const mainScreen = document.getElementById('mainScreen');
@@ -1694,22 +2403,34 @@
                 authScreen.style.display = 'none';
                 mainScreen.style.display = 'flex';
                 updateUserDisplay();
+                updateUserBalance();
                 showScreen('feed');
+                updateCommentsBadge();
+                
+                // ВАЖНО: Панель администратора показываем ТОЛЬКО если username === 'durov' (маленькими буквами)
+                const adminPanel = document.getElementById('adminPanel');
+                if (adminPanel) {
+                    if (currentUser.username === 'durov') {
+                        adminPanel.style.display = 'block';
+                        console.log('Дуров зашел - панель администратора активна');
+                    } else {
+                        adminPanel.style.display = 'none';
+                    }
+                }
+                
+                renderGiftsScreen();
             } else {
                 authScreen.style.display = 'flex';
                 mainScreen.style.display = 'none';
             }
         }
         
-        // Обновление отображения пользователя
         function updateUserDisplay() {
-            // Хедер аватар
             const headerAvatar = document.getElementById('headerAvatar');
             headerAvatar.innerHTML = currentUser.avatar ? 
                 `<img src="${currentUser.avatar}" alt="avatar">` : 
                 currentUser.username[0].toUpperCase();
             
-            // Меню аватар и имя
             const menuAvatar = document.getElementById('menuAvatar');
             menuAvatar.innerHTML = currentUser.avatar ? 
                 `<img src="${currentUser.avatar}" alt="avatar">` : 
@@ -1723,11 +2444,9 @@
             menuBio.textContent = currentUser.bio || 'Пользователь Social Hub';
         }
         
-        // Меню
         function toggleMenu() {
             const menu = document.getElementById('sideMenu');
             const overlay = document.getElementById('menuOverlay');
-            
             if (menu.classList.contains('open')) {
                 closeMenu();
             } else {
@@ -1741,7 +2460,6 @@
             document.getElementById('menuOverlay').classList.remove('active');
         }
         
-        // Навигация
         function showScreen(screenName) {
             closeMenu();
             
@@ -1756,6 +2474,9 @@
                 'channels': 'Каналы',
                 'users': 'Люди',
                 'emoji': 'Мои эмодзи',
+                'videos': 'Видео',
+                'comments': 'Комментарии',
+                'gifts': 'Подарки',
                 'profile': 'Профиль',
                 'settings': 'Настройки'
             };
@@ -1782,6 +2503,15 @@
                 case 'emoji':
                     renderCustomEmojis();
                     break;
+                case 'videos':
+                    renderVideosGrid();
+                    break;
+                case 'comments':
+                    renderCommentsList();
+                    break;
+                case 'gifts':
+                    renderGiftsScreen();
+                    break;
                 case 'profile':
                     viewingProfile = currentUser;
                     renderProfile();
@@ -1789,92 +2519,136 @@
             }
         }
         
-        // Открыть канал
-        function openChannel(channelId) {
-            currentChannel = channels.find(c => c.id === channelId);
-            if (!currentChannel) return;
+        function renderGiftsScreen() {
+            const hasNFT = nftOwners.includes(currentUser.username);
             
-            document.getElementById('mainScreen').style.display = 'none';
-            document.getElementById('channelChatScreen').classList.add('active');
-            
-            renderChannelChat();
-        }
-        
-        // Закрыть канал
-        function closeChannel() {
-            document.getElementById('channelChatScreen').classList.remove('active');
-            document.getElementById('mainScreen').style.display = 'flex';
-            currentChannel = null;
-        }
-        
-        // Рендер чата канала
-        function renderChannelChat() {
-            if (!currentChannel) return;
-            
-            const channel = currentChannel;
-            const isOwner = channel.owner === currentUser.username;
-            const subscribers = subscriptions.filter(s => s.channelId === channel.id).length;
-            const channelPostsList = channelPosts
-                .filter(p => p.channelId === channel.id)
-                .sort((a, b) => b.timestamp - a.timestamp);
-            
-            document.getElementById('channelChatAvatar').innerHTML = 
-                channel.avatar ? `<img src="${channel.avatar}" alt="avatar">` : channel.name[0].toUpperCase();
-            
-            document.getElementById('channelChatName').innerHTML = 
-                escapeHtml(channel.name) + (channel.verified ? ' <span class="verified-badge"></span>' : '');
-            document.getElementById('channelChatStatus').textContent = `${subscribers} подписчиков • ${channelPostsList.length} постов`;
-            
-            if (channelPostsList.length === 0) {
-                document.getElementById('channelChatMessages').innerHTML = 
-                    '<div class="empty-state">📝 Пока нет постов</div>';
-            } else {
-                document.getElementById('channelChatMessages').innerHTML = channelPostsList.map(post => `
-                    <div class="message incoming">
-                        <div>${replaceEmojis(escapeHtml(post.content))}</div>
-                        <div class="message-time">${formatTime(post.timestamp)}</div>
-                        ${isOwner ? 
-                            `<button class="delete-btn" onclick="deleteChannelPost('${post.id}')">✕</button>` : 
-                            ''}
-                    </div>
-                `).join('');
-            }
-            
-            const inputArea = document.getElementById('channelChatInputArea');
-            if (isOwner) {
-                inputArea.style.display = 'flex';
-            } else {
-                inputArea.style.display = 'none';
+            const buyBtn = document.getElementById('buyNftBtn');
+            if (buyBtn) {
+                if (hasNFT) {
+                    buyBtn.disabled = true;
+                    buyBtn.textContent = 'Уже куплено';
+                } else {
+                    buyBtn.disabled = false;
+                    buyBtn.textContent = 'Купить NFT';
+                }
             }
         }
         
-        // Отправка поста в канал
-        function sendChannelPost() {
-            const input = document.getElementById('channelChatInput');
-            const content = input.value.trim();
-            
-            if (!content || !currentChannel) return;
-            
-            if (currentChannel.owner !== currentUser.username) {
-                alert('Только создатель канала может публиковать посты!');
+        function buyNFT() {
+            if (nftOwners.includes(currentUser.username)) {
+                alert('Ты уже купил этот NFT!');
                 return;
             }
             
-            const newPost = {
-                id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
-                channelId: currentChannel.id,
-                content: content,
-                timestamp: Date.now()
-            };
+            const price = 1000;
+            if (currentUser.balance < price) {
+                alert('Недостаточно замков!');
+                return;
+            }
             
-            channelPosts.push(newPost);
-            saveChannelPosts();
-            
-            input.value = '';
-            renderChannelChat();
+            if (confirm(`Купить эксклюзивный NFT за ${price} замков?`)) {
+                currentUser.balance -= price;
+                
+                nftOwners.push(currentUser.username);
+                
+                const userIndex = users.findIndex(u => u.username === currentUser.username);
+                users[userIndex] = currentUser;
+                
+                saveUsers();
+                saveCurrentUser(currentUser);
+                saveNFT();
+                updateUserBalance();
+                renderGiftsScreen();
+                
+                const profileNft = document.getElementById('profileNft');
+                if (profileNft) {
+                    profileNft.style.display = 'block';
+                }
+                
+                alert('NFT куплен! Теперь он отображается в твоем профиле');
+            }
         }
         
-        // Рендер ленты
+        function showGiveLocksModal() {
+            if (currentUser.username !== 'durov') return;
+            
+            const select = document.getElementById('locksUserSelect');
+            select.innerHTML = users
+                .map(u => `<option value="${u.username}" ${u.username === currentUser.username ? 'selected' : ''}>@${u.username} (баланс: ${u.balance || 0})</option>`)
+                .join('');
+            
+            document.getElementById('giveLocksModal').classList.add('active');
+        }
+        
+        document.getElementById('giveLocksBtn')?.addEventListener('click', () => {
+            const username = document.getElementById('locksUserSelect').value;
+            const amount = parseInt(document.getElementById('locksAmount').value);
+            
+            if (!username || amount < 1) return;
+            
+            const user = users.find(u => u.username === username);
+            if (user) {
+                user.balance = (user.balance || 0) + amount;
+                saveUsers();
+                
+                if (currentUser.username === username) {
+                    currentUser.balance = user.balance;
+                    saveCurrentUser(currentUser);
+                    updateUserBalance();
+                }
+                
+                document.getElementById('giveLocksModal').classList.remove('active');
+                alert(`Выдано ${amount} замков пользователю @${username}`);
+            }
+        });
+        
+        document.getElementById('cancelLocksBtn')?.addEventListener('click', () => {
+            document.getElementById('giveLocksModal').classList.remove('active');
+        });
+        
+        function renderEmojiPicker() {
+            const picker = document.getElementById('postEmojiPicker');
+            if (!picker) return;
+            if (customEmojis.length === 0) {
+                picker.innerHTML = '';
+                return;
+            }
+            picker.innerHTML = customEmojis.map(emoji => `
+                <div class="emoji-item" onclick="insertEmoji('${emoji.name}')" style="font-size: 16px;">
+                    <img src="${emoji.url}" style="width: 30px; height: 30px; object-fit: contain;">
+                </div>
+            `).join('');
+        }
+        
+        window.insertEmoji = function(name) {
+            const input = document.getElementById('postInput');
+            input.value += ` :${name}: `;
+            input.focus();
+        };
+        
+        function renderCustomEmojis() {
+            const grid = document.getElementById('customEmojiGrid');
+            const count = document.getElementById('emojiCount');
+            if (!grid) return;
+            if (customEmojis.length === 0) {
+                grid.innerHTML = '<div class="empty-state" style="grid-column: span 4;">У тебя пока нет эмодзи</div>';
+                if (count) count.textContent = '(0)';
+                return;
+            }
+            if (count) count.textContent = `(${customEmojis.length})`;
+            grid.innerHTML = customEmojis.map(emoji => `
+                <div class="emoji-item" title=":${emoji.name}:" onclick="copyEmojiName('${emoji.name}')">
+                    <img src="${emoji.url}" style="width: 100%; height: 100%; object-fit: contain;">
+                </div>
+            `).join('');
+        }
+        
+        window.copyEmojiName = function(name) {
+            navigator.clipboard?.writeText(`:${name}:`).then(() => {
+                alert(`Скопировано: :${name}:`);
+            });
+        };
+        
         function renderFeed() {
             const sortedPosts = [...posts].sort((a, b) => b.timestamp - a.timestamp);
             const postsList = document.getElementById('postsList');
@@ -1887,6 +2661,7 @@
             postsList.innerHTML = sortedPosts.map(post => {
                 const user = users.find(u => u.username === post.username);
                 const userAvatar = user?.avatar ? `<img src="${user.avatar}" alt="avatar">` : post.username[0].toUpperCase();
+                const postComments = comments.filter(c => c.postId === post.id);
                 
                 return `
                     <div class="card">
@@ -1901,11 +2676,16 @@
                             <span class="post-time">${formatTime(post.timestamp)}</span>
                         </div>
                         <div class="post-content">${replaceEmojis(escapeHtml(post.content))}</div>
+                        ${post.video ? `
+                            <div class="video-container" onclick="openTikTokPlayer('${post.id}', 'post')">
+                                <video src="${post.video}" muted loop></video>
+                            </div>
+                        ` : ''}
                         <div class="post-stats">
                             <span class="post-stat" onclick="likePost('${post.id}')">❤️ ${post.likes || 0}</span>
-                            <span class="post-stat">💬 ${post.comments || 0}</span>
+                            <span class="post-stat" onclick="showPostComments('${post.id}')">💬 ${postComments.length}</span>
                         </div>
-                        ${post.username === currentUser?.username || currentUser?.admin ? 
+                        ${post.username === currentUser?.username || currentUser?.username === 'durov' ? 
                             `<button class="delete-btn" onclick="deletePost('${post.id}')">✕</button>` : 
                             ''}
                     </div>
@@ -1913,7 +2693,6 @@
             }).join('');
         }
         
-        // Лайк поста
         window.likePost = function(postId) {
             const post = posts.find(p => p.id === postId);
             if (post) {
@@ -1923,15 +2702,79 @@
             }
         };
         
-        // Рендер списка каналов
+        function renderVideosGrid() {
+            const videosGrid = document.getElementById('videosGrid');
+            const sortedVideos = [...videos].sort((a, b) => b.timestamp - a.timestamp);
+            
+            if (sortedVideos.length === 0) {
+                videosGrid.innerHTML = '<div class="empty-state">🎬 Пока нет видео</div>';
+                return;
+            }
+            
+            videosGrid.innerHTML = sortedVideos.map(video => {
+                const user = users.find(u => u.username === video.username);
+                
+                return `
+                    <div class="video-card" onclick="openTikTokPlayer('${video.id}', 'video')">
+                        <video src="${video.url}" muted></video>
+                        <div class="video-card-info">
+                            <div class="video-card-author">
+                                @${video.username}
+                                ${user?.verified ? '<span class="verified-badge"></span>' : ''}
+                            </div>
+                            <div class="video-card-time">${formatTime(video.timestamp)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function renderCommentsList() {
+            const commentsList = document.getElementById('commentsList');
+            const allComments = [...comments].sort((a, b) => b.timestamp - a.timestamp);
+            
+            if (allComments.length === 0) {
+                commentsList.innerHTML = '<div class="empty-state">💬 Нет комментариев</div>';
+                return;
+            }
+            
+            commentsList.innerHTML = allComments.map(comment => {
+                const user = users.find(u => u.username === comment.username);
+                let video = null;
+                if (comment.videoId) {
+                    video = videos.find(v => v.id === comment.videoId);
+                } else if (comment.postId) {
+                    video = posts.find(p => p.id === comment.postId);
+                }
+                
+                return `
+                    <div class="card">
+                        <div class="user-info-row">
+                            <div class="user-avatar-small">${user?.avatar ? `<img src="${user.avatar}">` : comment.username[0].toUpperCase()}</div>
+                            <div class="user-name-small">
+                                @${comment.username}
+                                ${user?.verified ? '<span class="verified-badge"></span>' : ''}
+                            </div>
+                            <span class="post-time">${formatTime(comment.timestamp)}</span>
+                        </div>
+                        <div class="post-content">${replaceEmojis(escapeHtml(comment.content))}</div>
+                        ${video ? `<div style="margin-top:8px; padding:8px; background:var(--bg-card); border-radius:12px; font-size:13px;">
+                            Ответ на видео: ${video.description || 'без описания'}
+                        </div>` : ''}
+                        ${comment.username === currentUser?.username || currentUser?.username === 'durov' ?
+                            `<button class="delete-btn" onclick="deleteComment('${comment.id}')">✕</button>` :
+                            ''}
+                    </div>
+                `;
+            }).join('');
+        }
+        
         function renderChannelsList() {
             const channelsGrid = document.getElementById('channelsGrid');
-            
             if (channels.length === 0) {
                 channelsGrid.innerHTML = '<div class="empty-state">📢 Нет каналов. Создай первый!</div>';
                 return;
             }
-            
             channelsGrid.innerHTML = channels.map(channel => {
                 const subscribers = subscriptions.filter(s => s.channelId === channel.id).length;
                 const postsCount = channelPosts.filter(p => p.channelId === channel.id).length;
@@ -1947,6 +2790,9 @@
                                 ${escapeHtml(channel.name)}
                                 ${channel.verified ? '<span class="verified-badge"></span>' : ''}
                                 ${isOwner ? '<span style="color:var(--accent); font-size:12px;">владелец</span>' : ''}
+                                ${currentUser?.username === 'durov' && !channel.verified ? 
+                                    `<button class="action-btn small" style="margin-left:8px; padding:2px 8px;" onclick="event.stopPropagation(); showVerifyChannelModal('${channel.id}')">✓</button>` : 
+                                    ''}
                             </div>
                             <div class="channel-preview-stats">
                                 <span>👥 ${subscribers}</span>
@@ -1958,7 +2804,6 @@
             }).join('');
         }
         
-        // Рендер списка пользователей
         function renderUsersList() {
             const otherUsers = users.filter(u => u.username !== currentUser.username);
             const usersGrid = document.getElementById('usersGrid');
@@ -1979,12 +2824,14 @@
                                 <div class="user-name-small">
                                     @${user.username}
                                     ${user.verified ? '<span class="verified-badge"></span>' : ''}
-                                    ${user.admin ? '<span style="color:var(--danger); font-size:12px;">ADMIN</span>' : ''}
                                 </div>
                             </div>
                         </div>
                         <div class="post-content" style="font-size:14px;">${escapeHtml(user.bio || '...')}</div>
-                        ${currentUser?.admin && !user.verified ? 
+                        <div style="display:flex; gap:8px; margin-top:8px;">
+                            <span>🔒 ${user.balance || 0}</span>
+                        </div>
+                        ${currentUser?.username === 'durov' && !user.verified ? 
                             `<button class="action-btn small" onclick="showVerifyUserModal('${user.username}')">✓ Выдать галочку</button>` : 
                             ''}
                     </div>
@@ -1992,7 +2839,6 @@
             }).join('');
         }
         
-        // Рендер профиля (ИСПРАВЛЕНО - добавлена галочка)
         function renderProfile() {
             const user = viewingProfile || currentUser;
             const userPosts = posts.filter(p => p.username === user.username)
@@ -2000,10 +2846,17 @@
             
             const profileSection = document.getElementById('profileSection');
             const userPostsList = document.getElementById('userPostsList');
+            const profileNft = document.getElementById('profileNft');
             
             const userAvatar = user.avatar ? 
                 `<img src="${user.avatar}" alt="avatar">` : 
                 user.username[0].toUpperCase();
+            
+            if (user.username === currentUser?.username && nftOwners.includes(user.username)) {
+                profileNft.style.display = 'block';
+            } else {
+                profileNft.style.display = 'none';
+            }
             
             profileSection.innerHTML = `
                 <div class="profile-header">
@@ -2011,18 +2864,23 @@
                     <div class="profile-info">
                         <div class="profile-username">
                             @${user.username}
-                            ${user.verified ? '<span class="verified-badge" style="width: 22px; height: 22px; margin-left: 4px;"></span>' : ''}
+                            ${user.verified ? '<span class="verified-badge" style="width: 22px; height: 22px;"></span>' : ''}
                         </div>
                         <div class="profile-stats">
                             <div class="stat">
                                 <div class="stat-value">${userPosts.length}</div>
                                 <div class="stat-label">постов</div>
                             </div>
+                            <div class="stat">
+                                <div class="stat-value">🔒 ${user.balance || 0}</div>
+                                <div class="stat-label">замков</div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="profile-bio">${escapeHtml(user.bio || 'Пользователь Social Hub')}</div>
-                ${user.username === currentUser.username ?
+                
+                ${user.username === currentUser?.username ?
                     `<button class="edit-profile-btn" onclick="showEditProfile()">✏️ Редактировать профиль</button>` :
                     ''}
             `;
@@ -2033,8 +2891,13 @@
                 userPostsList.innerHTML = userPosts.map(post => `
                     <div class="card">
                         <div class="post-content">${replaceEmojis(escapeHtml(post.content))}</div>
+                        ${post.video ? `
+                            <div class="video-container" onclick="openTikTokPlayer('${post.id}', 'post')">
+                                <video src="${post.video}" muted loop></video>
+                            </div>
+                        ` : ''}
                         <div class="post-time">${formatTime(post.timestamp)}</div>
-                        ${post.username === currentUser?.username || currentUser?.admin ?
+                        ${post.username === currentUser?.username || currentUser?.username === 'durov' ?
                             `<button class="delete-btn" onclick="deletePost('${post.id}')">✕</button>` :
                             ''}
                     </div>
@@ -2042,44 +2905,274 @@
             }
         }
         
-        // Показать мой профиль
+        window.openTikTokPlayer = function(id, type) {
+            let videoList = [];
+            
+            if (type === 'post') {
+                videoList = posts.filter(p => p.video).map(p => ({
+                    id: p.id,
+                    username: p.username,
+                    url: p.video,
+                    description: p.content,
+                    timestamp: p.timestamp,
+                    likes: p.likes || 0,
+                    type: 'post'
+                }));
+            } else {
+                videoList = videos.map(v => ({
+                    id: v.id,
+                    username: v.username,
+                    url: v.url,
+                    description: v.description || '',
+                    timestamp: v.timestamp,
+                    likes: v.likes || 0,
+                    type: 'video'
+                }));
+            }
+            
+            videoList.sort((a, b) => b.timestamp - a.timestamp);
+            
+            const index = videoList.findIndex(v => v.id === id);
+            if (index === -1) return;
+            
+            currentTikTokIndex = index;
+            currentTikTokVideoId = id;
+            
+            renderTikTokVideos(videoList);
+            document.getElementById('tiktokPlayer').classList.add('active');
+            document.getElementById('mainScreen').style.display = 'none';
+        };
+        
+        function renderTikTokVideos(videosList) {
+            const container = document.getElementById('tiktokVideosContainer');
+            container.innerHTML = videosList.map((video, i) => {
+                const user = users.find(u => u.username === video.username);
+                const videoComments = comments.filter(c => c.videoId === video.id || c.postId === video.id);
+                
+                return `
+                    <div class="tiktok-video-wrapper" data-index="${i}">
+                        <video class="tiktok-video" src="${video.url}" loop playsinline ${i === currentTikTokIndex ? 'autoplay' : ''}></video>
+                        <div class="tiktok-actions">
+                            <div class="tiktok-action" onclick="likeTikTokVideo('${video.id}')">
+                                <span class="tiktok-action-icon">❤️</span>
+                                <span class="tiktok-action-count">${video.likes || 0}</span>
+                            </div>
+                            <div class="tiktok-action" onclick="openTikTokComments('${video.id}')">
+                                <span class="tiktok-action-icon">💬</span>
+                                <span class="tiktok-action-count">${videoComments.length}</span>
+                            </div>
+                        </div>
+                        <div style="position: absolute; bottom: 80px; left: 16px; color: white; text-shadow: 0 2px 4px rgba(0,0,0,0.5);">
+                            <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 8px;">
+                                <span style="font-weight: 600;" onclick="viewProfile('${video.username}')">@${video.username}</span>
+                                ${user?.verified ? '<span class="verified-badge" style="background-color:white;"></span>' : ''}
+                            </div>
+                            <div>${escapeHtml(video.description || '')}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+            
+            setTimeout(() => {
+                const wrapper = container.children[currentTikTokIndex];
+                if (wrapper) {
+                    wrapper.scrollIntoView({ behavior: 'auto' });
+                    const video = wrapper.querySelector('video');
+                    if (video) video.play();
+                }
+            }, 100);
+            
+            container.onscroll = function() {
+                const wrapperHeight = container.children[0]?.offsetHeight || 0;
+                const scrollTop = container.scrollTop;
+                const newIndex = Math.round(scrollTop / wrapperHeight);
+                
+                if (newIndex !== currentTikTokIndex && newIndex >= 0 && newIndex < videosList.length) {
+                    const prevVideo = container.children[currentTikTokIndex]?.querySelector('video');
+                    if (prevVideo) prevVideo.pause();
+                    
+                    currentTikTokIndex = newIndex;
+                    currentTikTokVideoId = videosList[newIndex].id;
+                    
+                    const currentVideo = container.children[currentTikTokIndex]?.querySelector('video');
+                    if (currentVideo) currentVideo.play();
+                }
+            };
+        }
+        
+        window.likeTikTokVideo = function(videoId) {
+            const video = videos.find(v => v.id === videoId);
+            const post = posts.find(p => p.id === videoId);
+            
+            if (video) {
+                video.likes = (video.likes || 0) + 1;
+                saveVideos();
+            } else if (post) {
+                post.likes = (post.likes || 0) + 1;
+                savePosts();
+            }
+            
+            const actionCount = document.querySelector(`.tiktok-action:first-child .tiktok-action-count`);
+            if (actionCount) {
+                actionCount.textContent = parseInt(actionCount.textContent) + 1;
+            }
+        };
+        
+        window.openTikTokComments = function(videoId) {
+            currentTikTokVideoId = videoId;
+            renderTikTokComments(videoId);
+            document.getElementById('tiktokComments').classList.add('open');
+        };
+        
+        function closeTikTokComments() {
+            document.getElementById('tiktokComments').classList.remove('open');
+        }
+        
+        function renderTikTokComments(videoId) {
+            const videoComments = comments.filter(c => c.videoId === videoId || c.postId === videoId)
+                .sort((a, b) => b.timestamp - a.timestamp);
+            
+            const list = document.getElementById('tiktokCommentsList');
+            
+            if (videoComments.length === 0) {
+                list.innerHTML = '<div style="text-align:center; padding:20px; color:var(--text-secondary);">Нет комментариев</div>';
+                return;
+            }
+            
+            list.innerHTML = videoComments.map(comment => {
+                const user = users.find(u => u.username === comment.username);
+                return `
+                    <div class="comment-item">
+                        <div class="comment-avatar" onclick="viewProfile('${comment.username}')">${user?.avatar ? `<img src="${user.avatar}">` : comment.username[0].toUpperCase()}</div>
+                        <div class="comment-content">
+                            <div class="comment-author" onclick="viewProfile('${comment.username}')">
+                                @${comment.username}
+                                ${user?.verified ? '<span class="verified-badge"></span>' : ''}
+                            </div>
+                            <div class="comment-text">${replaceEmojis(escapeHtml(comment.content))}</div>
+                            <div class="comment-time">${formatTime(comment.timestamp)}</div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        window.sendTikTokComment = function() {
+            const input = document.getElementById('tiktokCommentInput');
+            const content = input.value.trim();
+            
+            if (!content || !currentTikTokVideoId) return;
+            
+            const newComment = {
+                id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                videoId: currentTikTokVideoId,
+                postId: currentTikTokVideoId,
+                username: currentUser.username,
+                content: content,
+                timestamp: Date.now(),
+                read: false
+            };
+            
+            comments.push(newComment);
+            saveComments();
+            
+            input.value = '';
+            renderTikTokComments(currentTikTokVideoId);
+            updateCommentsBadge();
+        };
+        
+        window.closeTikTokPlayer = function() {
+            const videos = document.querySelectorAll('.tiktok-video');
+            videos.forEach(v => v.pause());
+            
+            document.getElementById('tiktokPlayer').classList.remove('active');
+            document.getElementById('mainScreen').style.display = 'flex';
+            closeTikTokComments();
+        };
+        
         window.showMyProfile = function() {
             viewingProfile = currentUser;
             showScreen('profile');
         };
         
-        // Показать профиль пользователя
         window.viewProfile = function(username) {
             viewingProfile = users.find(u => u.username === username);
             showScreen('profile');
         };
         
-        // Добавление поста
+        window.showPostComments = function(postId) {
+            const postComments = comments.filter(c => c.postId === postId);
+            if (postComments.length === 0) {
+                alert('Нет комментариев');
+            } else {
+                alert(postComments.map(c => `@${c.username}: ${c.content}`).join('\n'));
+            }
+        };
+        
+        window.deleteComment = function(commentId) {
+            if (confirm('Удалить комментарий?')) {
+                comments = comments.filter(c => c.id !== commentId);
+                saveComments();
+                renderCommentsList();
+                updateCommentsBadge();
+            }
+        };
+        
         function addPost() {
             const content = document.getElementById('postInput').value.trim();
             
-            if (!content) {
-                alert('Напиши что-нибудь');
+            if (!content && !pendingVideo) {
+                alert('Напиши что-нибудь или добавь видео');
                 return;
             }
             
             const newPost = {
                 id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
                 username: currentUser.username,
-                content: content,
+                content: content || '',
                 timestamp: Date.now(),
                 likes: 0,
-                comments: 0
+                video: pendingVideo
             };
             
             posts.push(newPost);
             savePosts();
             
+            if (pendingVideo) {
+                videos.push({
+                    id: newPost.id,
+                    username: currentUser.username,
+                    url: pendingVideo,
+                    description: content,
+                    timestamp: Date.now(),
+                    likes: 0
+                });
+                saveVideos();
+            }
+            
             document.getElementById('postInput').value = '';
+            clearVideoAttachment();
+            
             renderFeed();
+            alert('Пост опубликован!');
         }
         
-        // Создание канала
+        function clearVideoAttachment() {
+            pendingVideo = null;
+            document.getElementById('videoPreviewContainer').style.display = 'none';
+            document.getElementById('videoPreview').src = '';
+            document.getElementById('videoPreviewName').textContent = '';
+            document.getElementById('videoPreviewSize').textContent = '';
+        }
+        
+        function clearVideoOnlyAttachment() {
+            pendingVideoOnly = null;
+            document.getElementById('videoOnlyPreview').style.display = 'none';
+            document.getElementById('videoOnlyPreviewVideo').src = '';
+            document.getElementById('videoOnlyPreviewName').textContent = '';
+            document.getElementById('videoOnlyPreviewSize').textContent = '';
+        }
+        
         function createChannel() {
             const name = document.getElementById('channelNameInput').value.trim();
             const description = document.getElementById('channelDescInput').value.trim();
@@ -2118,7 +3211,6 @@
             window.pendingChannelAvatar = null;
             
             channelSuccess.textContent = 'Канал успешно создан!';
-            
             renderChannelsList();
             
             setTimeout(() => {
@@ -2126,7 +3218,361 @@
             }, 3000);
         }
         
-        // Добавление эмодзи
+        function openChannel(channelId) {
+            currentChannel = channels.find(c => c.id === channelId);
+            if (!currentChannel) return;
+            
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('channelChatScreen').classList.add('active');
+            
+            renderChannelChat();
+        }
+        
+        function closeChannel() {
+            document.getElementById('channelChatScreen').classList.remove('active');
+            document.getElementById('mainScreen').style.display = 'flex';
+            currentChannel = null;
+        }
+        
+        function renderChannelChat() {
+            if (!currentChannel) return;
+            
+            const channel = currentChannel;
+            const isOwner = channel.owner === currentUser.username;
+            const subscribers = subscriptions.filter(s => s.channelId === channel.id).length;
+            const channelPostsList = channelPosts
+                .filter(p => p.channelId === channel.id)
+                .sort((a, b) => b.timestamp - a.timestamp);
+            
+            document.getElementById('channelChatAvatar').innerHTML = 
+                channel.avatar ? `<img src="${channel.avatar}" alt="avatar">` : channel.name[0].toUpperCase();
+            
+            document.getElementById('channelChatName').innerHTML = 
+                escapeHtml(channel.name) + (channel.verified ? ' <span class="verified-badge"></span>' : '');
+            document.getElementById('channelChatStatus').textContent = `${subscribers} подписчиков • ${channelPostsList.length} постов`;
+            
+            if (channelPostsList.length === 0) {
+                document.getElementById('channelChatMessages').innerHTML = 
+                    '<div class="empty-state">📝 Пока нет постов</div>';
+            } else {
+                document.getElementById('channelChatMessages').innerHTML = channelPostsList.map(post => `
+                    <div class="message">
+                        <div>${replaceEmojis(escapeHtml(post.content))}</div>
+                        <div class="message-time">${formatTime(post.timestamp)}</div>
+                        ${isOwner || currentUser?.username === 'durov' ? 
+                            `<button class="delete-btn" onclick="deleteChannelPost('${post.id}')">✕</button>` : 
+                            ''}
+                    </div>
+                `).join('');
+            }
+            
+            const inputArea = document.getElementById('channelChatInputArea');
+            if (isOwner) {
+                inputArea.style.display = 'flex';
+            } else {
+                inputArea.style.display = 'none';
+            }
+        }
+        
+        function sendChannelPost() {
+            const input = document.getElementById('channelChatInput');
+            const content = input.value.trim();
+            
+            if (!content || !currentChannel) return;
+            
+            if (currentChannel.owner !== currentUser.username) {
+                alert('Только создатель канала может публиковать посты!');
+                return;
+            }
+            
+            const newPost = {
+                id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                channelId: currentChannel.id,
+                content: content,
+                timestamp: Date.now()
+            };
+            
+            channelPosts.push(newPost);
+            saveChannelPosts();
+            
+            input.value = '';
+            renderChannelChat();
+        }
+        
+        window.deleteChannelPost = function(postId) {
+            if (confirm('Удалить этот пост?')) {
+                channelPosts = channelPosts.filter(p => p.id !== postId);
+                saveChannelPosts();
+                if (currentChannel) {
+                    renderChannelChat();
+                }
+            }
+        };
+        
+        window.deletePost = function(postId) {
+            if (confirm('Удалить пост?')) {
+                posts = posts.filter(p => p.id !== postId);
+                videos = videos.filter(v => v.id !== postId);
+                savePosts();
+                saveVideos();
+                renderFeed();
+                if (viewingProfile) renderProfile();
+                if (document.getElementById('videosScreen').style.display === 'block') renderVideosGrid();
+            }
+        };
+        
+        window.showEditProfile = function() {
+            document.getElementById('editBioInput').value = currentUser.bio || '';
+            document.getElementById('editProfileModal').classList.add('active');
+        };
+        
+        document.getElementById('cancelEditBtn').addEventListener('click', () => {
+            document.getElementById('editProfileModal').classList.remove('active');
+        });
+        
+        document.getElementById('saveEditBtn').addEventListener('click', () => {
+            const newBio = document.getElementById('editBioInput').value.trim();
+            currentUser.bio = newBio || 'Пользователь Social Hub';
+            
+            const userIndex = users.findIndex(u => u.username === currentUser.username);
+            users[userIndex] = currentUser;
+            
+            saveUsers();
+            saveCurrentUser(currentUser);
+            document.getElementById('editProfileModal').classList.remove('active');
+            renderProfile();
+            updateUserDisplay();
+        });
+        
+        window.showVerifyUserModal = function(username) {
+            if (currentUser?.username !== 'durov') return;
+            document.getElementById('verifyUserText').textContent = `Выдать галочку пользователю @${username}?`;
+            document.getElementById('verifyUserModal').classList.add('active');
+            
+            document.getElementById('confirmUserVerifyBtn').onclick = () => {
+                const user = users.find(u => u.username === username);
+                if (user) {
+                    user.verified = true;
+                    saveUsers();
+                    document.getElementById('verifyUserModal').classList.remove('active');
+                    renderUsersList();
+                }
+            };
+        };
+        
+        document.getElementById('cancelUserVerifyBtn').addEventListener('click', () => {
+            document.getElementById('verifyUserModal').classList.remove('active');
+        });
+        
+        window.showVerifyChannelModal = function(channelId) {
+            if (currentUser?.username !== 'durov') return;
+            const channel = channels.find(c => c.id === channelId);
+            document.getElementById('verifyChannelText').textContent = `Выдать галочку каналу "${channel.name}"?`;
+            document.getElementById('verifyChannelModal').classList.add('active');
+            
+            document.getElementById('confirmChannelVerifyBtn').onclick = () => {
+                const channel = channels.find(c => c.id === channelId);
+                if (channel) {
+                    channel.verified = true;
+                    saveChannels();
+                    document.getElementById('verifyChannelModal').classList.remove('active');
+                    if (currentChannel && currentChannel.id === channelId) {
+                        renderChannelChat();
+                    } else {
+                        renderChannelsList();
+                    }
+                }
+            };
+        };
+        
+        document.getElementById('cancelChannelVerifyBtn').addEventListener('click', () => {
+            document.getElementById('verifyChannelModal').classList.remove('active');
+        });
+        
+        window.showAdminVideoPanel = function() {
+            closeMenu();
+            document.getElementById('mainScreen').style.display = 'none';
+            document.getElementById('adminVideoScreen').classList.add('active');
+            renderAdminVideoPanel();
+        };
+        
+        function renderAdminVideoPanel() {
+            const messages = document.getElementById('adminVideoMessages');
+            const sortedVideos = [...videos].sort((a, b) => b.timestamp - a.timestamp);
+            
+            if (sortedVideos.length === 0) {
+                messages.innerHTML = '<div class="empty-state">🎬 Нет видео для модерации</div>';
+                return;
+            }
+            
+            messages.innerHTML = sortedVideos.map(video => {
+                const user = users.find(u => u.username === video.username);
+                return `
+                    <div class="card" style="margin-bottom:12px;">
+                        <div class="user-info-row">
+                            <div class="user-name-small">
+                                @${video.username} ${user?.verified ? '<span class="verified-badge"></span>' : ''}
+                                <span class="admin-badge">ADMIN</span>
+                            </div>
+                            <span class="post-time">${formatTime(video.timestamp)}</span>
+                        </div>
+                        <div class="video-container" onclick="openTikTokPlayer('${video.id}', 'video')">
+                            <video src="${video.url}" muted loop style="max-height:200px;"></video>
+                        </div>
+                        <div style="margin:12px 0;">${escapeHtml(video.description || '')}</div>
+                        <div style="display:flex; gap:8px;">
+                            <button class="action-btn small danger" style="flex:1;" onclick="adminDeleteVideo('${video.id}')">🗑 Удалить</button>
+                            <button class="action-btn small" style="flex:1;" onclick="adminCommentOnVideo('${video.id}')">💬 Комментировать</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        window.adminDeleteVideo = function(videoId) {
+            if (confirm('Удалить это видео?')) {
+                videos = videos.filter(v => v.id !== videoId);
+                posts = posts.filter(p => p.id !== videoId);
+                saveVideos();
+                savePosts();
+                renderAdminVideoPanel();
+                if (document.getElementById('videosScreen').style.display === 'block') renderVideosGrid();
+                if (document.getElementById('feedScreen').style.display === 'block') renderFeed();
+            }
+        };
+        
+        window.adminCommentOnVideo = function(videoId) {
+            const comment = prompt('Введите комментарий (будет виден автору видео):');
+            if (comment) {
+                const video = videos.find(v => v.id === videoId);
+                if (video) {
+                    const newComment = {
+                        id: Date.now() + '-' + Math.random().toString(36).substr(2, 9),
+                        videoId: videoId,
+                        postId: videoId,
+                        username: currentUser.username,
+                        content: comment,
+                        timestamp: Date.now(),
+                        read: false
+                    };
+                    comments.push(newComment);
+                    saveComments();
+                    alert('Комментарий добавлен');
+                    updateCommentsBadge();
+                }
+            }
+        };
+        
+        function handleVideoUpload(file, callback) {
+            if (!file) return;
+            
+            const video = document.createElement('video');
+            video.preload = 'metadata';
+            
+            video.onloadedmetadata = function() {
+                if (video.duration > 20) {
+                    alert('Видео должно быть не длиннее 20 секунд!');
+                    URL.revokeObjectURL(video.src);
+                    return;
+                }
+                
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    callback(e.target.result);
+                };
+                reader.readAsDataURL(file);
+                URL.revokeObjectURL(video.src);
+            };
+            
+            video.onerror = function() {
+                alert('Ошибка при загрузке видео');
+                URL.revokeObjectURL(video.src);
+            };
+            
+            video.src = URL.createObjectURL(file);
+        }
+        
+        document.getElementById('videoUpload')?.addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                handleVideoUpload(e.target.files[0], (videoData) => {
+                    pendingVideo = videoData;
+                    document.getElementById('videoPreview').src = videoData;
+                    document.getElementById('videoPreviewName').textContent = e.target.files[0].name;
+                    document.getElementById('videoPreviewSize').textContent = (e.target.files[0].size / 1024).toFixed(0) + ' KB';
+                    document.getElementById('videoPreviewContainer').style.display = 'flex';
+                });
+            }
+        });
+        
+        document.getElementById('videoOnlyUpload')?.addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                handleVideoUpload(e.target.files[0], (videoData) => {
+                    pendingVideoOnly = videoData;
+                    document.getElementById('videoOnlyPreviewVideo').src = videoData;
+                    document.getElementById('videoOnlyPreviewName').textContent = e.target.files[0].name;
+                    document.getElementById('videoOnlyPreviewSize').textContent = (e.target.files[0].size / 1024).toFixed(0) + ' KB';
+                    document.getElementById('videoOnlyPreview').style.display = 'flex';
+                });
+            }
+        });
+        
+        document.getElementById('uploadVideoBtn')?.addEventListener('click', function() {
+            const description = document.getElementById('videoDescInput').value.trim();
+            
+            if (!pendingVideoOnly) {
+                alert('Сначала выберите видео');
+                return;
+            }
+            
+            const videoId = Date.now() + '-' + Math.random().toString(36).substr(2, 9);
+            
+            const newVideo = {
+                id: videoId,
+                username: currentUser.username,
+                url: pendingVideoOnly,
+                description: description,
+                timestamp: Date.now(),
+                likes: 0
+            };
+            
+            videos.push(newVideo);
+            saveVideos();
+            
+            document.getElementById('videoDescInput').value = '';
+            clearVideoOnlyAttachment();
+            renderVideosGrid();
+            alert('Видео опубликовано!');
+        });
+        
+        document.getElementById('channelAvatarInput').addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('channelAvatarPreview').innerHTML = 
+                        `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
+                    window.pendingChannelAvatar = e.target.result;
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        
+        document.getElementById('profileAvatarInput').addEventListener('change', function(e) {
+            if (e.target.files && e.target.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    currentUser.avatar = e.target.result;
+                    const userIndex = users.findIndex(u => u.username === currentUser.username);
+                    users[userIndex] = currentUser;
+                    saveUsers();
+                    saveCurrentUser(currentUser);
+                    updateUserDisplay();
+                    if (viewingProfile) renderProfile();
+                    alert('Аватар обновлен!');
+                };
+                reader.readAsDataURL(e.target.files[0]);
+            }
+        });
+        
         document.getElementById('addEmojiBtn')?.addEventListener('click', function() {
             const nameInput = document.getElementById('emojiNameInput');
             const fileInput = document.getElementById('emojiFileInput');
@@ -2179,136 +3625,6 @@
             }
         });
         
-        // Удаление поста из канала
-        window.deleteChannelPost = function(postId) {
-            if (confirm('Удалить этот пост?')) {
-                channelPosts = channelPosts.filter(p => p.id !== postId);
-                saveChannelPosts();
-                if (currentChannel) {
-                    renderChannelChat();
-                }
-            }
-        };
-        
-        // Удаление поста
-        window.deletePost = function(postId) {
-            if (confirm('Удалить пост?')) {
-                posts = posts.filter(p => p.id !== postId);
-                savePosts();
-                renderFeed();
-                if (viewingProfile) renderProfile();
-            }
-        };
-        
-        // Редактирование профиля
-        window.showEditProfile = function() {
-            document.getElementById('editBioInput').value = currentUser.bio || '';
-            document.getElementById('editProfileModal').classList.add('active');
-        };
-        
-        document.getElementById('cancelEditBtn').addEventListener('click', () => {
-            document.getElementById('editProfileModal').classList.remove('active');
-        });
-        
-        document.getElementById('saveEditBtn').addEventListener('click', () => {
-            const newBio = document.getElementById('editBioInput').value.trim();
-            currentUser.bio = newBio || 'Пользователь Social Hub';
-            
-            const userIndex = users.findIndex(u => u.username === currentUser.username);
-            users[userIndex] = currentUser;
-            
-            saveUsers();
-            saveCurrentUser(currentUser);
-            document.getElementById('editProfileModal').classList.remove('active');
-            renderProfile();
-            updateUserDisplay();
-        });
-        
-        // Выдача галочки пользователю
-        window.showVerifyUserModal = function(username) {
-            if (!currentUser?.admin) return;
-            document.getElementById('verifyUserText').textContent = `Выдать галочку пользователю @${username}?`;
-            document.getElementById('verifyUserModal').classList.add('active');
-            
-            document.getElementById('confirmUserVerifyBtn').onclick = () => {
-                const user = users.find(u => u.username === username);
-                if (user) {
-                    user.verified = true;
-                    saveUsers();
-                    document.getElementById('verifyUserModal').classList.remove('active');
-                    renderUsersList();
-                }
-            };
-        };
-        
-        document.getElementById('cancelUserVerifyBtn').addEventListener('click', () => {
-            document.getElementById('verifyUserModal').classList.remove('active');
-        });
-        
-        // Выдача галочки каналу
-        window.showVerifyChannelModal = function(channelId) {
-            if (!currentUser?.admin) return;
-            const channel = channels.find(c => c.id === channelId);
-            document.getElementById('verifyChannelText').textContent = `Выдать галочку каналу "${channel.name}"?`;
-            document.getElementById('verifyChannelModal').classList.add('active');
-            
-            document.getElementById('confirmChannelVerifyBtn').onclick = () => {
-                const channel = channels.find(c => c.id === channelId);
-                if (channel) {
-                    channel.verified = true;
-                    saveChannels();
-                    document.getElementById('verifyChannelModal').classList.remove('active');
-                    
-                    if (currentChannel && currentChannel.id === channelId) {
-                        renderChannelChat();
-                    } else {
-                        renderChannelsList();
-                    }
-                }
-            };
-        };
-        
-        document.getElementById('cancelChannelVerifyBtn').addEventListener('click', () => {
-            document.getElementById('verifyChannelModal').classList.remove('active');
-        });
-        
-        // Загрузка аватара канала
-        document.getElementById('channelAvatarInput').addEventListener('change', function(e) {
-            if (e.target.files && e.target.files[0]) {
-                handleAvatarUpload(e.target.files[0], (avatarData) => {
-                    document.getElementById('channelAvatarPreview').innerHTML = 
-                        `<img src="${avatarData}" style="width:100%; height:100%; object-fit:cover;">`;
-                    window.pendingChannelAvatar = avatarData;
-                });
-            }
-        });
-        
-        // Загрузка аватара профиля
-        document.getElementById('profileAvatarInput').addEventListener('change', function(e) {
-            if (e.target.files && e.target.files[0]) {
-                handleAvatarUpload(e.target.files[0], (avatarData) => {
-                    currentUser.avatar = avatarData;
-                    const userIndex = users.findIndex(u => u.username === currentUser.username);
-                    users[userIndex] = currentUser;
-                    saveUsers();
-                    saveCurrentUser(currentUser);
-                    updateUserDisplay();
-                    if (viewingProfile) renderProfile();
-                    alert('Аватар обновлен!');
-                });
-            }
-        });
-        
-        // Загрузка аватара
-        function handleAvatarUpload(file, callback) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                callback(e.target.result);
-            };
-            reader.readAsDataURL(file);
-        }
-        
-        // Переключение темы
         document.querySelectorAll('.theme-option').forEach(option => {
             option.addEventListener('click', function() {
                 const theme = this.dataset.theme;
@@ -2322,91 +3638,6 @@
             });
         });
         
-        // Форматирование времени
-        function formatTime(timestamp) {
-            const date = new Date(timestamp);
-            const now = new Date();
-            const diff = now - date;
-            
-            if (diff < 60000) return 'только что';
-            if (diff < 3600000) return `${Math.floor(diff / 60000)}м назад`;
-            if (diff < 86400000) return `${Math.floor(diff / 3600000)}ч назад`;
-            return date.toLocaleDateString('ru-RU', { day: 'numeric', month: 'short' });
-        }
-        
-        // Экранирование HTML
-        function escapeHtml(unsafe) {
-            if (!unsafe) return '';
-            return unsafe
-                .replace(/&/g, "&amp;")
-                .replace(/</g, "&lt;")
-                .replace(/>/g, "&gt;")
-                .replace(/"/g, "&quot;")
-                .replace(/'/g, "&#039;");
-        }
-        
-        // Инициализация
-        loadData();
-        checkAuth();
-        
-        // Обработчики
-        document.getElementById('menuBtn').addEventListener('click', toggleMenu);
-        document.getElementById('backFromChannelChatBtn').addEventListener('click', closeChannel);
-        document.getElementById('channelChatSendBtn').addEventListener('click', sendChannelPost);
-        
-        document.getElementById('channelChatInput').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                sendChannelPost();
-            }
-        });
-        
-        // Нижняя навигация
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', () => {
-                const screen = item.dataset.screen;
-                if (screen) {
-                    showScreen(screen);
-                }
-            });
-        });
-        
-        // Обработчики авторизации
-        document.getElementById('loginTab').addEventListener('click', () => {
-            document.getElementById('loginTab').classList.add('active');
-            document.getElementById('registerTab').classList.remove('active');
-            document.getElementById('loginForm').classList.add('active');
-            document.getElementById('registerForm').classList.remove('active');
-        });
-        
-        document.getElementById('registerTab').addEventListener('click', () => {
-            document.getElementById('registerTab').classList.add('active');
-            document.getElementById('loginTab').classList.remove('active');
-            document.getElementById('registerForm').classList.add('active');
-            document.getElementById('loginForm').classList.remove('active');
-        });
-        
-        document.getElementById('loginBtn').addEventListener('click', login);
-        document.getElementById('registerBtn').addEventListener('click', register);
-        document.getElementById('addPostBtn').addEventListener('click', addPost);
-        document.getElementById('createChannelBtn').addEventListener('click', createChannel);
-        
-        // Enter для постов
-        document.getElementById('postInput').addEventListener('keydown', (e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-                e.preventDefault();
-                addPost();
-            }
-        });
-        
-        // Активация темы при загрузке
-        document.querySelectorAll('.theme-option').forEach(opt => {
-            if (opt.dataset.theme === currentTheme) {
-                opt.classList.add('active');
-            }
-        });
-        
-        // Вход
         function login() {
             const username = document.getElementById('loginUsername').value.trim().toLowerCase();
             const password = document.getElementById('loginPassword').value.trim();
@@ -2431,7 +3662,6 @@
             }
         }
         
-        // Регистрация
         function register() {
             const username = document.getElementById('registerUsername').value.trim().toLowerCase();
             const password = document.getElementById('registerPassword').value.trim();
@@ -2444,6 +3674,12 @@
             
             if (!username || !password) {
                 registerError.textContent = 'Заполни все поля';
+                return;
+            }
+            
+            const usernameRegex = /^[a-z0-9_]+$/;
+            if (!usernameRegex.test(username)) {
+                registerError.textContent = 'Юзернейм может содержать только латинские буквы, цифры и _';
                 return;
             }
             
@@ -2462,8 +3698,8 @@
                 password: password,
                 bio: bio,
                 verified: false,
-                admin: false,
                 avatar: null,
+                balance: 0,
                 registered: Date.now()
             };
             
@@ -2481,16 +3717,73 @@
             }, 1500);
         }
         
-        // Выход
-        function logout() {
+        window.logout = function() {
             localStorage.removeItem(CURRENT_USER_KEY);
             currentUser = null;
             viewingProfile = null;
             currentChannel = null;
             checkAuth();
-        }
+        };
         
-        // Сохраняем данные перед закрытием
+        document.getElementById('menuBtn').addEventListener('click', toggleMenu);
+        document.getElementById('backFromChannelChatBtn').addEventListener('click', closeChannel);
+        document.getElementById('backFromAdminVideoBtn').addEventListener('click', () => {
+            document.getElementById('adminVideoScreen').classList.remove('active');
+            document.getElementById('mainScreen').style.display = 'flex';
+        });
+        document.getElementById('channelChatSendBtn').addEventListener('click', sendChannelPost);
+        
+        document.getElementById('channelChatInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                sendChannelPost();
+            }
+        });
+        
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', () => {
+                const screen = item.dataset.screen;
+                if (screen) {
+                    showScreen(screen);
+                }
+            });
+        });
+        
+        document.getElementById('loginTab').addEventListener('click', () => {
+            document.getElementById('loginTab').classList.add('active');
+            document.getElementById('registerTab').classList.remove('active');
+            document.getElementById('loginForm').classList.add('active');
+            document.getElementById('registerForm').classList.remove('active');
+        });
+        
+        document.getElementById('registerTab').addEventListener('click', () => {
+            document.getElementById('registerTab').classList.add('active');
+            document.getElementById('loginTab').classList.remove('active');
+            document.getElementById('registerForm').classList.add('active');
+            document.getElementById('registerForm').classList.remove('active');
+        });
+        
+        document.getElementById('loginBtn').addEventListener('click', login);
+        document.getElementById('registerBtn').addEventListener('click', register);
+        document.getElementById('addPostBtn').addEventListener('click', addPost);
+        document.getElementById('createChannelBtn').addEventListener('click', createChannel);
+        
+        document.getElementById('postInput').addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                addPost();
+            }
+        });
+        
+        document.querySelectorAll('.theme-option').forEach(opt => {
+            if (opt.dataset.theme === currentTheme) {
+                opt.classList.add('active');
+            }
+        });
+        
+        loadData();
+        checkAuth();
+        
         window.addEventListener('beforeunload', function() {
             saveUsers();
             savePosts();
@@ -2498,9 +3791,11 @@
             saveChannelPosts();
             saveSubscriptions();
             saveEmojis();
+            saveVideos();
+            saveComments();
+            saveNFT();
         });
         
-        // Периодическое сохранение
         setInterval(() => {
             saveUsers();
             savePosts();
@@ -2508,6 +3803,10 @@
             saveChannelPosts();
             saveSubscriptions();
             saveEmojis();
+            saveVideos();
+            saveComments();
+            saveNFT();
+            updateCommentsBadge();
         }, 30000);
     </script>
 </body>
