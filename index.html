@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Social Hub</title>
+    <title>GoLife</title>
     <style>
         * {
             box-sizing: border-box;
@@ -29,6 +29,7 @@
             --shadow: rgba(0, 0, 0, 0.1);
             --verified-badge-color: #3390ec;
             --gold: #FFD700;
+            --golife-gradient: linear-gradient(135deg, #FF6B6B, #4ECDC4);
         }
         
         [data-theme="dark"] {
@@ -49,6 +50,7 @@
             --shadow: rgba(0, 0, 0, 0.3);
             --verified-badge-color: #3390ec;
             --gold: #FFD700;
+            --golife-gradient: linear-gradient(135deg, #FF6B6B, #4ECDC4);
         }
         
         body {
@@ -100,10 +102,10 @@
         }
         
         .auth-header h1 {
-            font-size: 42px;
+            font-size: 48px;
             font-weight: 700;
             margin-bottom: 12px;
-            background: linear-gradient(135deg, var(--tg-blue), #5856D6);
+            background: var(--golife-gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -284,7 +286,7 @@
             width: 44px;
             height: 44px;
             border-radius: 14px;
-            background: linear-gradient(135deg, var(--tg-blue), #5856D6);
+            background: var(--golife-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -340,7 +342,7 @@
         
         .menu-header {
             padding: 40px 20px 20px;
-            background: linear-gradient(135deg, var(--tg-blue), #5856D6);
+            background: var(--golife-gradient);
             color: white;
             border-bottom-left-radius: 24px;
             border-bottom-right-radius: 24px;
@@ -983,7 +985,7 @@
             width: 40px;
             height: 40px;
             border-radius: 12px;
-            background: linear-gradient(135deg, var(--tg-blue), #5856D6);
+            background: var(--golife-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1376,7 +1378,7 @@
             width: 44px;
             height: 44px;
             border-radius: 14px;
-            background: linear-gradient(135deg, var(--tg-blue), #5856D6);
+            background: var(--golife-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1541,7 +1543,7 @@
             width: 80px;
             height: 80px;
             border-radius: 24px;
-            background: linear-gradient(135deg, var(--tg-blue), #5856D6);
+            background: var(--golife-gradient);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -1854,13 +1856,59 @@
             color: var(--text-secondary);
             margin-top: 4px;
         }
+
+        .subscribe-btn {
+            background: var(--tg-blue);
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-left: auto;
+        }
+
+        .subscribe-btn.subscribed {
+            background: var(--success);
+        }
+
+        .subscribe-btn:active {
+            transform: scale(0.95);
+        }
+
+        .channel-stats {
+            display: flex;
+            gap: 16px;
+            margin: 12px 0;
+            padding: 12px;
+            background: var(--bg-secondary);
+            border-radius: 16px;
+        }
+
+        .channel-stat-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .channel-stat-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text-primary);
+        }
+
+        .channel-stat-label {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="auth-screen" id="authScreen">
             <div class="auth-header">
-                <h1>Social Hub</h1>
+                <h1>GoLife</h1>
                 <p>Войди чтобы продолжить</p>
             </div>
             
@@ -2250,6 +2298,8 @@
                 </div>
             </div>
             
+            <div class="channel-stats" id="channelStats"></div>
+            
             <div class="chat-messages" id="channelChatMessages"></div>
             
             <div class="chat-input-area" id="channelChatInputArea">
@@ -2341,18 +2391,19 @@
 
     <script>
         // Ключи для localStorage
-        const USERS_KEY = 'social_users_final_v2';
-        const POSTS_KEY = 'social_posts_final_v2';
-        const CHANNELS_KEY = 'social_channels_final_v2';
-        const CHANNEL_POSTS_KEY = 'social_channel_posts_final_v2';
-        const SUBSCRIPTIONS_KEY = 'social_subscriptions_final_v2';
-        const CURRENT_USER_KEY = 'social_current_user_final_v2';
-        const THEME_KEY = 'social_theme_final_v2';
-        const EMOJIS_KEY = 'social_emojis_final_v2';
-        const VIDEOS_KEY = 'social_videos_final_v2';
-        const COMMENTS_KEY = 'social_comments_final_v2';
-        const NFT_KEY = 'social_nft_final_v2';
-        const MESSAGES_KEY = 'social_messages_final_v2';
+        const USERS_KEY = 'golife_users_v1';
+        const POSTS_KEY = 'golife_posts_v1';
+        const CHANNELS_KEY = 'golife_channels_v1';
+        const CHANNEL_POSTS_KEY = 'golife_channel_posts_v1';
+        const SUBSCRIPTIONS_KEY = 'golife_subscriptions_v1';
+        const CURRENT_USER_KEY = 'golife_current_user_v1';
+        const THEME_KEY = 'golife_theme_v1';
+        const EMOJIS_KEY = 'golife_emojis_v1';
+        const VIDEOS_KEY = 'golife_videos_v1';
+        const COMMENTS_KEY = 'golife_comments_v1';
+        const NFT_KEY = 'golife_nft_v1';
+        const MESSAGES_KEY = 'golife_messages_v1';
+        const CHANNEL_REACTIONS_KEY = 'golife_channel_reactions_v1';
         
         // Данные
         let users = [];
@@ -2365,6 +2416,7 @@
         let comments = [];
         let nftOwners = [];
         let messages = [];
+        let channelReactions = [];
         let currentUser = null;
         let viewingProfile = null;
         let currentChannel = null;
@@ -2389,7 +2441,7 @@
                         if (typeof u.balance !== 'number') u.balance = 0;
                     });
                 } else {
-                    // Начальные данные: только Дуров с балансом 0 (как у всех)
+                    // Начальные данные: только Дуров с балансом 0
                     users = [
                         { 
                             username: 'durov', 
@@ -2431,10 +2483,13 @@
                 const savedMessages = localStorage.getItem(MESSAGES_KEY);
                 messages = savedMessages ? JSON.parse(savedMessages) : [];
                 
+                const savedReactions = localStorage.getItem(CHANNEL_REACTIONS_KEY);
+                channelReactions = savedReactions ? JSON.parse(savedReactions) : [];
+                
                 const savedCurrentUser = localStorage.getItem(CURRENT_USER_KEY);
                 currentUser = savedCurrentUser ? JSON.parse(savedCurrentUser) : null;
                 
-                console.log('Данные загружены, балансы сброшены');
+                console.log('Данные GoLife загружены');
             } catch (e) {
                 console.error('Ошибка загрузки:', e);
             }
@@ -2450,6 +2505,7 @@
         function saveComments() { localStorage.setItem(COMMENTS_KEY, JSON.stringify(comments)); }
         function saveNFT() { localStorage.setItem(NFT_KEY, JSON.stringify(nftOwners)); }
         function saveMessages() { localStorage.setItem(MESSAGES_KEY, JSON.stringify(messages)); }
+        function saveChannelReactions() { localStorage.setItem(CHANNEL_REACTIONS_KEY, JSON.stringify(channelReactions)); }
         
         function saveCurrentUser(user) {
             currentUser = user;
@@ -2548,12 +2604,22 @@
                     <div>
                         <button class="action-btn small danger" onclick="showAdminVideoPanel()" style="width:100%;">🎬 Управлять видео</button>
                     </div>
+                    <div style="margin-top:10px;">
+                        <button class="action-btn small" onclick="showVerifyUserModalFromAdmin()" style="width:100%;">✅ Выдать галочку</button>
+                    </div>
                 `;
                 container.appendChild(adminDiv);
                 console.log('✅ Панель администратора добавлена');
             } else {
                 const oldPanel = document.getElementById('durovAdminPanel');
                 if (oldPanel) oldPanel.remove();
+            }
+        }
+        
+        function showVerifyUserModalFromAdmin() {
+            const username = prompt('Введите username пользователя для выдачи галочки:');
+            if (username) {
+                showVerifyUserModal(username);
             }
         }
         
@@ -2573,7 +2639,7 @@
                 (currentUser.verified ? ' <span class="verified-badge"></span>' : '');
             
             const menuBio = document.getElementById('menuBio');
-            menuBio.textContent = currentUser.bio || 'Пользователь Social Hub';
+            menuBio.textContent = currentUser.bio || 'Пользователь GoLife';
         }
         
         function toggleMenu() {
@@ -2612,7 +2678,7 @@
                 'profile': 'Профиль',
                 'settings': 'Настройки'
             };
-            document.getElementById('headerTitle').textContent = titles[screenName] || 'Social Hub';
+            document.getElementById('headerTitle').textContent = titles[screenName] || 'GoLife';
             
             document.querySelectorAll('.nav-item').forEach(item => {
                 item.classList.remove('active');
@@ -2645,9 +2711,10 @@
                     renderGiftsScreen();
                     break;
                 case 'profile':
-                    viewingProfile = currentUser;
+                    if (!viewingProfile || viewingProfile.username === currentUser.username) {
+                        viewingProfile = currentUser;
+                    }
                     renderProfile();
-                    switchProfileTab('main');
                     break;
                 case 'settings':
                     renderAdminPanelForDurov();
@@ -3067,29 +3134,56 @@
                 const subscribers = subscriptions.filter(s => s.channelId === channel.id).length;
                 const postsCount = channelPosts.filter(p => p.channelId === channel.id).length;
                 const isOwner = channel.owner === currentUser.username;
+                const isSubscribed = subscriptions.some(s => s.channelId === channel.id && s.username === currentUser.username);
                 
                 return `
-                    <div class="channel-preview-card" onclick="openChannel('${channel.id}')">
-                        <div class="channel-preview-avatar">
+                    <div class="channel-preview-card">
+                        <div class="channel-preview-avatar" onclick="openChannel('${channel.id}')">
                             ${channel.avatar ? `<img src="${channel.avatar}" alt="avatar">` : channel.name[0].toUpperCase()}
                         </div>
-                        <div class="channel-preview-info">
+                        <div class="channel-preview-info" onclick="openChannel('${channel.id}')">
                             <div class="channel-preview-name">
                                 ${escapeHtml(channel.name)}
                                 ${channel.verified ? '<span class="verified-badge"></span>' : ''}
                                 ${isOwner ? '<span style="color:var(--accent); font-size:12px;">владелец</span>' : ''}
-                                ${currentUser?.username === 'durov' && !channel.verified ? 
-                                    `<button class="action-btn small" style="margin-left:8px; padding:2px 8px;" onclick="event.stopPropagation(); showVerifyChannelModal('${channel.id}')">✓</button>` : 
-                                    ''}
                             </div>
                             <div class="channel-preview-stats">
                                 <span>👥 ${subscribers}</span>
                                 <span>📝 ${postsCount}</span>
                             </div>
                         </div>
+                        ${!isOwner ? `
+                            <button class="subscribe-btn ${isSubscribed ? 'subscribed' : ''}" onclick="toggleSubscribe('${channel.id}')">
+                                ${isSubscribed ? '✓ Подписан' : 'Подписаться'}
+                            </button>
+                        ` : ''}
+                        ${currentUser?.username === 'durov' && !channel.verified ? 
+                            `<button class="action-btn small" style="margin-left:8px; padding:2px 8px;" onclick="event.stopPropagation(); showVerifyChannelModal('${channel.id}')">✓</button>` : 
+                            ''}
                     </div>
                 `;
             }).join('');
+        }
+        
+        function toggleSubscribe(channelId) {
+            const existing = subscriptions.find(s => s.channelId === channelId && s.username === currentUser.username);
+            
+            if (existing) {
+                subscriptions = subscriptions.filter(s => !(s.channelId === channelId && s.username === currentUser.username));
+            } else {
+                subscriptions.push({
+                    channelId: channelId,
+                    username: currentUser.username,
+                    subscribedAt: Date.now()
+                });
+            }
+            
+            saveSubscriptions();
+            renderChannelsList();
+            
+            if (currentChannel && currentChannel.id === channelId) {
+                renderChannelChat();
+            }
         }
         
         function renderUsersList() {
@@ -3142,12 +3236,14 @@
                 `<img src="${user.avatar}" alt="avatar">` : 
                 user.username[0].toUpperCase();
             
+            // Показываем форму отправки сообщения только если это не свой профиль
             if (user.username !== currentUser?.username) {
                 messageFormContainer.style.display = 'block';
             } else {
                 messageFormContainer.style.display = 'none';
             }
             
+            // Показываем NFT если есть
             if (nftOwners.includes(user.username)) {
                 profileNft.style.display = 'block';
                 noNftMessage.style.display = 'none';
@@ -3176,13 +3272,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="profile-bio">${escapeHtml(user.bio || 'Пользователь Social Hub')}</div>
+                <div class="profile-bio">${escapeHtml(user.bio || 'Пользователь GoLife')}</div>
                 
                 ${user.username === currentUser?.username ?
                     `<button class="edit-profile-btn" onclick="showEditProfile()">✏️ Редактировать профиль</button>` :
-                    ''}
+                    ''
+                }
             `;
             
+            // Рендерим сообщения
             renderMessages();
             
             if (userPosts.length === 0) {
@@ -3542,6 +3640,7 @@
             const channel = currentChannel;
             const isOwner = channel.owner === currentUser.username;
             const subscribers = subscriptions.filter(s => s.channelId === channel.id).length;
+            const isSubscribed = subscriptions.some(s => s.channelId === channel.id && s.username === currentUser.username);
             const channelPostsList = channelPosts
                 .filter(p => p.channelId === channel.id)
                 .sort((a, b) => b.timestamp - a.timestamp);
@@ -3551,21 +3650,54 @@
             
             document.getElementById('channelChatName').innerHTML = 
                 escapeHtml(channel.name) + (channel.verified ? ' <span class="verified-badge"></span>' : '');
-            document.getElementById('channelChatStatus').textContent = `${subscribers} подписчиков • ${channelPostsList.length} постов`;
+            
+            document.getElementById('channelStats').innerHTML = `
+                <div class="channel-stat-item">
+                    <div class="channel-stat-value">${subscribers}</div>
+                    <div class="channel-stat-label">подписчиков</div>
+                </div>
+                <div class="channel-stat-item">
+                    <div class="channel-stat-value">${channelPostsList.length}</div>
+                    <div class="channel-stat-label">постов</div>
+                </div>
+                ${!isOwner ? `
+                    <div class="channel-stat-item">
+                        <button class="subscribe-btn ${isSubscribed ? 'subscribed' : ''}" onclick="toggleSubscribe('${channel.id}')" style="margin-top:0;">
+                            ${isSubscribed ? '✓ Подписан' : 'Подписаться'}
+                        </button>
+                    </div>
+                ` : ''}
+            `;
             
             if (channelPostsList.length === 0) {
                 document.getElementById('channelChatMessages').innerHTML = 
                     '<div class="empty-state">📝 Пока нет постов</div>';
             } else {
-                document.getElementById('channelChatMessages').innerHTML = channelPostsList.map(post => `
-                    <div class="message">
-                        <div>${replaceEmojis(escapeHtml(post.content))}</div>
-                        <div class="message-time">${formatTime(post.timestamp)}</div>
-                        ${isOwner || currentUser?.username === 'durov' ? 
-                            `<button class="delete-btn" onclick="deleteChannelPost('${post.id}')">✕</button>` : 
-                            ''}
-                    </div>
-                `).join('');
+                document.getElementById('channelChatMessages').innerHTML = channelPostsList.map(post => {
+                    const postReactions = channelReactions.filter(r => r.postId === post.id);
+                    const userReaction = postReactions.find(r => r.username === currentUser.username);
+                    
+                    return `
+                        <div class="card" style="margin-bottom:12px;">
+                            <div class="post-content">${replaceEmojis(escapeHtml(post.content))}</div>
+                            <div class="post-time">${formatTime(post.timestamp)}</div>
+                            <div class="post-stats">
+                                <span class="post-stat" onclick="reactToChannelPost('${post.id}', 'like')">
+                                    ${userReaction?.type === 'like' ? '❤️' : '🤍'} ${postReactions.filter(r => r.type === 'like').length}
+                                </span>
+                                <span class="post-stat" onclick="reactToChannelPost('${post.id}', 'dislike')">
+                                    ${userReaction?.type === 'dislike' ? '👎' : '👍'} ${postReactions.filter(r => r.type === 'dislike').length}
+                                </span>
+                                <span class="post-stat" onclick="reactToChannelPost('${post.id}', 'fire')">
+                                    ${userReaction?.type === 'fire' ? '🔥' : '🔥'} ${postReactions.filter(r => r.type === 'fire').length}
+                                </span>
+                            </div>
+                            ${isOwner || currentUser?.username === 'durov' ? 
+                                `<button class="delete-btn" onclick="deleteChannelPost('${post.id}')">✕</button>` : 
+                                ''}
+                        </div>
+                    `;
+                }).join('');
             }
             
             const inputArea = document.getElementById('channelChatInputArea');
@@ -3574,6 +3706,31 @@
             } else {
                 inputArea.style.display = 'none';
             }
+        }
+        
+        function reactToChannelPost(postId, type) {
+            const existing = channelReactions.find(r => r.postId === postId && r.username === currentUser.username);
+            
+            if (existing) {
+                if (existing.type === type) {
+                    // Убираем реакцию
+                    channelReactions = channelReactions.filter(r => !(r.postId === postId && r.username === currentUser.username));
+                } else {
+                    // Меняем реакцию
+                    existing.type = type;
+                }
+            } else {
+                // Добавляем новую реакцию
+                channelReactions.push({
+                    postId: postId,
+                    username: currentUser.username,
+                    type: type,
+                    timestamp: Date.now()
+                });
+            }
+            
+            saveChannelReactions();
+            renderChannelChat();
         }
         
         function sendChannelPost() {
@@ -3604,7 +3761,9 @@
         window.deleteChannelPost = function(postId) {
             if (confirm('Удалить этот пост?')) {
                 channelPosts = channelPosts.filter(p => p.id !== postId);
+                channelReactions = channelReactions.filter(r => r.postId !== postId);
                 saveChannelPosts();
+                saveChannelReactions();
                 if (currentChannel) {
                     renderChannelChat();
                 }
@@ -3634,7 +3793,7 @@
         
         document.getElementById('saveEditBtn').addEventListener('click', () => {
             const newBio = document.getElementById('editBioInput').value.trim();
-            currentUser.bio = newBio || 'Пользователь Social Hub';
+            currentUser.bio = newBio || 'Пользователь GoLife';
             
             const userIndex = users.findIndex(u => u.username === currentUser.username);
             users[userIndex] = currentUser;
@@ -3893,7 +4052,7 @@
         function register() {
             const username = document.getElementById('registerUsername').value.trim().toLowerCase();
             const password = document.getElementById('registerPassword').value.trim();
-            const bio = document.getElementById('registerBio').value.trim() || 'Пользователь Social Hub';
+            const bio = document.getElementById('registerBio').value.trim() || 'Пользователь GoLife';
             const registerError = document.getElementById('registerError');
             const registerSuccess = document.getElementById('registerSuccess');
             
@@ -3944,13 +4103,12 @@
                 // Переключаем на вкладку входа
                 document.getElementById('loginTab').click();
                 
-                // Автоматически заполняем поля входа (опционально)
+                // Автоматически заполняем поля входа
                 document.getElementById('loginUsername').value = username;
                 document.getElementById('loginPassword').value = password;
                 
                 registerSuccess.textContent = '';
                 
-                // Небольшая подсказка
                 alert('Данные скопированы в форму входа. Нажми "Войти"!');
             }, 1500);
         }
@@ -4033,6 +4191,7 @@
             saveComments();
             saveNFT();
             saveMessages();
+            saveChannelReactions();
         });
         
         setInterval(() => {
@@ -4046,6 +4205,7 @@
             saveComments();
             saveNFT();
             saveMessages();
+            saveChannelReactions();
             updateCommentsBadge();
             renderAdminPanelForDurov();
         }, 30000);
