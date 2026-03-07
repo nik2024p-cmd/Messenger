@@ -2397,7 +2397,7 @@
                             bio: 'Создатель Telegram',
                             verified: true,
                             avatar: null,
-                            balance: 0,               // ← баланс 0
+                            balance: 0,
                             registered: Date.now() 
                         }
                     ];
@@ -2496,13 +2496,10 @@
         function updateCommentsBadge() {
             const unreadComments = comments.filter(c => !c.read && c.username !== currentUser?.username).length;
             document.getElementById('commentsBadge').textContent = unreadComments;
-            // document.getElementById('navCommentsBadge').textContent = unreadComments; // если есть такой элемент
             if (unreadComments === 0) {
                 document.getElementById('commentsBadge').style.display = 'none';
-                // document.getElementById('navCommentsBadge').style.display = 'none';
             } else {
                 document.getElementById('commentsBadge').style.display = 'inline-block';
-                // document.getElementById('navCommentsBadge').style.display = 'inline-block';
             }
         }
         
@@ -2521,21 +2518,19 @@
                 console.log('Текущий пользователь:', currentUser.username);
                 
                 renderGiftsScreen();
-                renderAdminPanelForDurov(); // ← проверяем и добавляем админку
+                renderAdminPanelForDurov();
             } else {
                 authScreen.style.display = 'flex';
                 mainScreen.style.display = 'none';
             }
         }
         
-        // Функция добавления админ-панели для Дурова (гарантированно)
+        // Функция добавления админ-панели для Дурова
         function renderAdminPanelForDurov() {
             const container = document.getElementById('adminPanelContainer');
             if (!container) return;
             
-            // Если пользователь - Дуров, добавляем панель
             if (currentUser && currentUser.username === 'durov') {
-                // Проверим, есть ли уже панель, чтобы не дублировать
                 if (document.getElementById('durovAdminPanel')) return;
                 
                 const adminDiv = document.createElement('div');
@@ -2557,7 +2552,6 @@
                 container.appendChild(adminDiv);
                 console.log('✅ Панель администратора добавлена');
             } else {
-                // Если не Дуров, удаляем панель, если была
                 const oldPanel = document.getElementById('durovAdminPanel');
                 if (oldPanel) oldPanel.remove();
             }
@@ -2656,20 +2650,18 @@
                     switchProfileTab('main');
                     break;
                 case 'settings':
-                    renderAdminPanelForDurov(); // при открытии настроек обновляем панель
+                    renderAdminPanelForDurov();
                     break;
             }
         }
         
         // Переключение вкладок в профиле
         window.switchProfileTab = function(tabName) {
-            // Обновляем классы вкладок
             document.querySelectorAll('.profile-tab').forEach(tab => {
                 tab.classList.remove('active');
             });
             event.target.classList.add('active');
             
-            // Обновляем классы контента
             document.querySelectorAll('.profile-tab-content').forEach(content => {
                 content.classList.remove('active');
             });
@@ -3150,14 +3142,12 @@
                 `<img src="${user.avatar}" alt="avatar">` : 
                 user.username[0].toUpperCase();
             
-            // Показываем форму отправки сообщения только если это не свой профиль
             if (user.username !== currentUser?.username) {
                 messageFormContainer.style.display = 'block';
             } else {
                 messageFormContainer.style.display = 'none';
             }
             
-            // Показываем NFT если есть
             if (nftOwners.includes(user.username)) {
                 profileNft.style.display = 'block';
                 noNftMessage.style.display = 'none';
@@ -3193,11 +3183,10 @@
                     ''}
             `;
             
-            // Рендерим сообщения
             renderMessages();
             
             if (userPosts.length === 0) {
-                userPostsList.innerHTML = '<div class="empty-state">?? Нет постов</div>';
+                userPostsList.innerHTML = '<div class="empty-state">📝 Нет постов</div>';
             } else {
                 userPostsList.innerHTML = userPosts.map(post => `
                     <div class="card">
@@ -3938,21 +3927,31 @@
                 bio: bio,
                 verified: false,
                 avatar: null,
-                balance: 0,                       // ← всегда 0
+                balance: 0,
                 registered: Date.now()
             };
             
             users.push(newUser);
             saveUsers();
             
-            registerSuccess.textContent = 'Регистрация успешна! Теперь войди.';
+            registerSuccess.textContent = 'Регистрация успешна! Сейчас переключим на вход...';
             
             document.getElementById('registerUsername').value = '';
             document.getElementById('registerPassword').value = '';
             document.getElementById('registerBio').value = '';
             
             setTimeout(() => {
+                // Переключаем на вкладку входа
                 document.getElementById('loginTab').click();
+                
+                // Автоматически заполняем поля входа (опционально)
+                document.getElementById('loginUsername').value = username;
+                document.getElementById('loginPassword').value = password;
+                
+                registerSuccess.textContent = '';
+                
+                // Небольшая подсказка
+                alert('Данные скопированы в форму входа. Нажми "Войти"!');
             }, 1500);
         }
         
@@ -3999,7 +3998,7 @@
             document.getElementById('registerTab').classList.add('active');
             document.getElementById('loginTab').classList.remove('active');
             document.getElementById('registerForm').classList.add('active');
-            document.getElementById('registerForm').classList.remove('active');
+            document.getElementById('loginForm').classList.remove('active');
         });
         
         document.getElementById('loginBtn').addEventListener('click', login);
@@ -4048,7 +4047,7 @@
             saveNFT();
             saveMessages();
             updateCommentsBadge();
-            renderAdminPanelForDurov(); // при каждом интервале проверяем и добавляем админку
+            renderAdminPanelForDurov();
         }, 30000);
     </script>
 </body>
